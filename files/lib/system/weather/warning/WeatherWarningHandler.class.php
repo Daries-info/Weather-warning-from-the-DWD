@@ -6,6 +6,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
 use wcf\data\weather\warning\WeatherWarning;
+use wcf\system\exception\SystemException;
 use wcf\system\io\HttpFactory;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\SingletonFactory;
