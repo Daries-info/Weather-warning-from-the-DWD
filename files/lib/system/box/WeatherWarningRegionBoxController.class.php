@@ -8,7 +8,7 @@ use wcf\system\weather\warning\WeatherWarningHandler;
 
 /**
  * Box that shows the region warning weather information.
- * 
+ *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.dev - Free License <https://daries.dev/en/license-for-free-plugins>
@@ -31,8 +31,8 @@ class WeatherWarningRegionBoxController extends AbstractBoxController
         $warningTime = WeatherWarningHandler::getInstance()->getWeatherWarningTime();
 
         if (
-            $user->userID &&
-            !$user->getUserOption('weatherWarningRegionEnable')
+            $user->userID
+            && !$user->getUserOption('weatherWarningRegionEnable')
         ) {
             return;
         }

@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/6.0/language.xsd"
-    languagecode="en" languagename="English">
-    <import>
-        <category name="wcf.acp.box">
-            <item
-                name="wcf.acp.box.boxController.dev.daries.weatherWarning.forestFireHazardIndexWBI"><![CDATA[Weather warnings DWD (Forest Fire Hazard Index WBI)]]></item>
-            <item name="wcf.acp.box.boxController.dev.daries.weatherWarning.germany"><![CDATA[Weather warnings DWD (Germany)]]></item>
-            <item name="wcf.acp.box.boxController.dev.daries.weatherWarning.grasslandFireIndex"><![CDATA[Weather warnings DWD (Grassland - Fire Index)]]></item>
-            <item name="wcf.acp.box.boxController.dev.daries.weatherWarning.region"><![CDATA[Weather warnings DWD (Region)]]></item>
-        </category>
+	xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/6.0/language.xsd"
+	languagecode="en" languagename="English">
+	<import>
+		<category name="wcf.acp.box">
+			<item
+				name="wcf.acp.box.boxController.dev.daries.weatherWarning.forestFireHazardIndexWBI"><![CDATA[Weather warnings DWD (Forest Fire Hazard Index WBI)]]></item>
+			<item name="wcf.acp.box.boxController.dev.daries.weatherWarning.germany"><![CDATA[Weather warnings DWD (Germany)]]></item>
+			<item name="wcf.acp.box.boxController.dev.daries.weatherWarning.grasslandFireIndex"><![CDATA[Weather warnings DWD (Grassland - Fire Index)]]></item>
+			<item name="wcf.acp.box.boxController.dev.daries.weatherWarning.region"><![CDATA[Weather warnings DWD (Region)]]></item>
+		</category>
 
-        <category name="wcf.acp.option">
-            <item name="wcf.acp.option.category.user.weatherWarning"><![CDATA[Weather warnings DWD]]></item>
-            <item name="wcf.acp.option.module_weather_warning"><![CDATA[Weather warnings]]></item>
-            <item name="wcf.acp.option.weather_warning_default_region"><![CDATA[Region]]></item>
-            <item name="wcf.acp.option.weather_warning_default_region.description"><![CDATA[Enter a standard region here. This region is used if the user has not entered anything in their profile.]]></item>
-            <item name="wcf.acp.option.weather_warning_enable_forest_fire_hazard_index_wbi"><![CDATA[Show Forest Fire Hazard Index WBI]]></item>
-            <item name="wcf.acp.option.weather_warning_enable_grassland_fire_index"><![CDATA[Show Grassland - Fire Index]]></item>
-        </category>
+		<category name="wcf.acp.option">
+			<item name="wcf.acp.option.category.user.weatherWarning"><![CDATA[Weather warnings DWD]]></item>
+			<item name="wcf.acp.option.module_weather_warning"><![CDATA[Weather warnings]]></item>
+			<item name="wcf.acp.option.weather_warning_default_region"><![CDATA[Region]]></item>
+			<item name="wcf.acp.option.weather_warning_default_region.description"><![CDATA[Enter a standard region here. This region is used if the user has not entered anything in their profile.]]></item>
+			<item name="wcf.acp.option.weather_warning_enable_forest_fire_hazard_index_wbi"><![CDATA[Show Forest Fire Hazard Index WBI]]></item>
+			<item name="wcf.acp.option.weather_warning_enable_grassland_fire_index"><![CDATA[Show Grassland - Fire Index]]></item>
+		</category>
 
-        <category name="wcf.user.option">
-            <item name="wcf.user.option.category.settings.general.weatherWarning"><![CDATA[Weather warnings DWD]]></item>
-            <item name="wcf.user.option.error.noExist"><![CDATA[Please enter a valid region.]]></item>
-            <item name="wcf.user.option.weatherWarningForestFireHazardIndexGermanyEnable"><![CDATA[View Forest Fire Hazard Index WBI]]></item>
-            <item name="wcf.user.option.weatherWarningGermanyEnable"><![CDATA[View germany weather warnings]]></item>
-            <item name="wcf.user.option.weatherWarningGrasslandFireIndexGermanyEnable"><![CDATA[View Grassland - Fire Index]]></item>
-            <item name="wcf.user.option.weatherWarningRegion"><![CDATA[Region]]></item>
-            <item name="wcf.user.option.weatherWarningRegionEnable"><![CDATA[View regional weather warnings]]></item>
-        </category>
+		<category name="wcf.user.option">
+			<item name="wcf.user.option.category.settings.general.weatherWarning"><![CDATA[Weather warnings DWD]]></item>
+			<item name="wcf.user.option.error.noExist"><![CDATA[Please enter a valid region.]]></item>
+			<item name="wcf.user.option.weatherWarningForestFireHazardIndexGermanyEnable"><![CDATA[View Forest Fire Hazard Index WBI]]></item>
+			<item name="wcf.user.option.weatherWarningGermanyEnable"><![CDATA[View germany weather warnings]]></item>
+			<item name="wcf.user.option.weatherWarningGrasslandFireIndexGermanyEnable"><![CDATA[View Grassland - Fire Index]]></item>
+			<item name="wcf.user.option.weatherWarningRegion"><![CDATA[Region]]></item>
+			<item name="wcf.user.option.weatherWarningRegionEnable"><![CDATA[View regional weather warnings]]></item>
+		</category>
 
-        <category name="wcf.weatherWarning">
-            <item name="wcf.weatherWarning.allWarnings"><![CDATA[<a href="{link controller='WeatherWarnings'}{/link}">All warnings</a>]]></item>
-            <item name="wcf.weatherWarning.box.settings.map"><![CDATA[Map of Germany (by warning criteria)]]></item>
-            <item name="wcf.weatherWarning.box.settings.viewMapInfo"><![CDATA[Show map of Germany Information]]></item>
-            <item name="wcf.weatherWarning.dwd"><![CDATA[Weather warnings DWD]]></item>
-            <item name="wcf.weatherWarning.dwd.legend1"><![CDATA[Warnings of extreme weather (Level 4)]]></item>
-            <item name="wcf.weatherWarning.dwd.legend2"><![CDATA[Warnings of severe weather (Level 3)]]></item>
-            <item name="wcf.weatherWarning.dwd.legend3"><![CDATA[Warning of significant weather (Level 2)]]></item>
-            <item name="wcf.weatherWarning.dwd.legend4"><![CDATA[Weather warnings (Level 1)]]></item>
-            <item name="wcf.weatherWarning.dwd.legend5"><![CDATA[Preliminary information]]></item>
-            <item name="wcf.weatherWarning.dwd.legend7"><![CDATA[Heat warnings]]></item>
-            <item name="wcf.weatherWarning.dwd.legend8"><![CDATA[Ultraviolet radiation warnings]]></item>
-            <item name="wcf.weatherWarning.dwd.legend9"><![CDATA[No severe weather]]></item>
-            <item name="wcf.weatherWarning.dwd.map"><![CDATA[All]]></item>
-            <item name="wcf.weatherWarning.dwd.map.blackIce"><![CDATA[Slippery conditions, Black ice]]></item>
-            <item name="wcf.weatherWarning.dwd.map.frost"><![CDATA[Frost]]></item>
-            <item name="wcf.weatherWarning.dwd.map.fog"><![CDATA[Fog]]></item>
-            <item name="wcf.weatherWarning.dwd.map.heat"><![CDATA[Heat]]></item>
-            <item name="wcf.weatherWarning.dwd.map.rain"><![CDATA[Heavy or continuous rain]]></item>
-            <item name="wcf.weatherWarning.dwd.map.snow"><![CDATA[Snowfall]]></item>
-            <item name="wcf.weatherWarning.dwd.map.storm"><![CDATA[Wind (storm, hurricane)]]></item>
-            <item name="wcf.weatherWarning.dwd.map.thaw"><![CDATA[Thaw]]></item>
-            <item name="wcf.weatherWarning.dwd.map.thunder"><![CDATA[Thunderstorm]]></item>
-            <item name="wcf.weatherWarning.dwd.map.uv"><![CDATA[UV radiation]]></item>
-            <item name="wcf.weatherWarning.dwd.region"><![CDATA[Weather warnings DWD ({if $region|empty}Region{else}{$region}{/if})]]></item>
-            <item name="wcf.weatherWarning.empty"><![CDATA[There are currently no warnings for the region ({$region}).]]></item>
-            <item name="wcf.weatherWarning.empty.region"><![CDATA[If you fill in the "Region" field in your {if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">profile</a>{else}profile{/if}, you will receive regional warnings from the DWD here.]]></item>
-            <item name="wcf.weatherWarning.end"><![CDATA[End]]></item>
-            <item name="wcf.weatherWarning.forestFireHazardIndex"><![CDATA[Forest Fire Hazard Index WBI]]></item>
-            <item name="wcf.weatherWarning.grasslandFireIndex"><![CDATA[Grassland - Fire Index]]></item>
-            <item name="wcf.weatherWarning.more.information"><![CDATA[More information]]></item>
-            <item name="wcf.weatherWarning.noEnd"><![CDATA[No end specified]]></item>
-            <item name="wcf.weatherWarning.notice"><![CDATA[For your region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) there is a weather warning from the DWD!]]></item>
-            <item name="wcf.weatherWarning.region.info"><![CDATA[Info]]></item>
-            <item name="wcf.weatherWarning.region.info.text"><![CDATA[The region display has been set up by the administrator of this page.<br />
+		<category name="wcf.weatherWarning">
+			<item name="wcf.weatherWarning.allWarnings"><![CDATA[<a href="{link controller='WeatherWarnings'}{/link}">All warnings</a>]]></item>
+			<item name="wcf.weatherWarning.box.settings.map"><![CDATA[Map of Germany (by warning criteria)]]></item>
+			<item name="wcf.weatherWarning.box.settings.viewMapInfo"><![CDATA[Show map of Germany Information]]></item>
+			<item name="wcf.weatherWarning.dwd"><![CDATA[Weather warnings DWD]]></item>
+			<item name="wcf.weatherWarning.dwd.legend1"><![CDATA[Warnings of extreme weather (Level 4)]]></item>
+			<item name="wcf.weatherWarning.dwd.legend2"><![CDATA[Warnings of severe weather (Level 3)]]></item>
+			<item name="wcf.weatherWarning.dwd.legend3"><![CDATA[Warning of significant weather (Level 2)]]></item>
+			<item name="wcf.weatherWarning.dwd.legend4"><![CDATA[Weather warnings (Level 1)]]></item>
+			<item name="wcf.weatherWarning.dwd.legend5"><![CDATA[Preliminary information]]></item>
+			<item name="wcf.weatherWarning.dwd.legend7"><![CDATA[Heat warnings]]></item>
+			<item name="wcf.weatherWarning.dwd.legend8"><![CDATA[Ultraviolet radiation warnings]]></item>
+			<item name="wcf.weatherWarning.dwd.legend9"><![CDATA[No severe weather]]></item>
+			<item name="wcf.weatherWarning.dwd.map"><![CDATA[All]]></item>
+			<item name="wcf.weatherWarning.dwd.map.blackIce"><![CDATA[Slippery conditions, Black ice]]></item>
+			<item name="wcf.weatherWarning.dwd.map.frost"><![CDATA[Frost]]></item>
+			<item name="wcf.weatherWarning.dwd.map.fog"><![CDATA[Fog]]></item>
+			<item name="wcf.weatherWarning.dwd.map.heat"><![CDATA[Heat]]></item>
+			<item name="wcf.weatherWarning.dwd.map.rain"><![CDATA[Heavy or continuous rain]]></item>
+			<item name="wcf.weatherWarning.dwd.map.snow"><![CDATA[Snowfall]]></item>
+			<item name="wcf.weatherWarning.dwd.map.storm"><![CDATA[Wind (storm, hurricane)]]></item>
+			<item name="wcf.weatherWarning.dwd.map.thaw"><![CDATA[Thaw]]></item>
+			<item name="wcf.weatherWarning.dwd.map.thunder"><![CDATA[Thunderstorm]]></item>
+			<item name="wcf.weatherWarning.dwd.map.uv"><![CDATA[UV radiation]]></item>
+			<item name="wcf.weatherWarning.dwd.region"><![CDATA[Weather warnings DWD ({if $region|empty}Region{else}{$region}{/if})]]></item>
+			<item name="wcf.weatherWarning.empty"><![CDATA[There are currently no warnings for the region ({$region}).]]></item>
+			<item name="wcf.weatherWarning.empty.region"><![CDATA[If you fill in the "Region" field in your {if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">profile</a>{else}profile{/if}, you will receive regional warnings from the DWD here.]]></item>
+			<item name="wcf.weatherWarning.end"><![CDATA[End]]></item>
+			<item name="wcf.weatherWarning.forestFireHazardIndex"><![CDATA[Forest Fire Hazard Index WBI]]></item>
+			<item name="wcf.weatherWarning.grasslandFireIndex"><![CDATA[Grassland - Fire Index]]></item>
+			<item name="wcf.weatherWarning.more.information"><![CDATA[More information]]></item>
+			<item name="wcf.weatherWarning.noEnd"><![CDATA[No end specified]]></item>
+			<item name="wcf.weatherWarning.notice"><![CDATA[For your region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) there is a weather warning from the DWD!]]></item>
+			<item name="wcf.weatherWarning.region.info"><![CDATA[Info]]></item>
+			<item name="wcf.weatherWarning.region.info.text"><![CDATA[The region display has been set up by the administrator of this page.<br />
 <br />
 You can customize {if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<a href="{link controller='User' object=$__wcf->user forceFrontend=true}editOnInit=true#about{/link}">your profile</a>{else}your profile{/if} by specifying your region to tailor the region display to your personal preferences.]]></item>
-            <item name="wcf.weatherWarning.sort"><![CDATA[Sort by]]></item>
-            <item name="wcf.weatherWarning.start"><![CDATA[Start]]></item>
-            <item name="wcf.weatherWarning.warningTime"><![CDATA[Last update: {time time=$warningTime}]]></item>
-            <item name="wcf.weatherWarning.viewFullSize"><![CDATA[View full size]]></item>
-        </category>
-    </import>
+			<item name="wcf.weatherWarning.sort"><![CDATA[Sort by]]></item>
+			<item name="wcf.weatherWarning.start"><![CDATA[Start]]></item>
+			<item name="wcf.weatherWarning.warningTime"><![CDATA[Last update: {time time=$warningTime}]]></item>
+			<item name="wcf.weatherWarning.viewFullSize"><![CDATA[View full size]]></item>
+		</category>
+	</import>
 
-    <delete>
-        <item name="wcf.acp.option.weather_warning_enable_forestFireHazardIndexWBI" />
-        <item name="wcf.acp.option.weather_warning_enable_grasslandFireIndex" />
-    </delete>
+	<delete>
+		<item name="wcf.acp.option.weather_warning_enable_forestFireHazardIndexWBI" />
+		<item name="wcf.acp.option.weather_warning_enable_grasslandFireIndex" />
+	</delete>
 </language>

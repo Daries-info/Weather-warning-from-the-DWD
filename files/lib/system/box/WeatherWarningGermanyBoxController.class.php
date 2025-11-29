@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
 
 /**
  * Box that shows the german warning weather map.
- * 
+ *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.dev - Free License <https://daries.dev/en/license-for-free-plugins>
@@ -17,6 +17,7 @@ use wcf\util\StringUtil;
 class WeatherWarningGermanyBoxController extends AbstractBoxController implements IConditionBoxController
 {
     protected string $map = "map";
+
     protected bool $viewMapInfo = false;
 
     /**
@@ -51,7 +52,7 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
      */
     public function getConditionsTemplate(): string
     {
-        $mapOptions =  [
+        $mapOptions = [
             'blackIce' => WCF::getLanguage()->get('wcf.weatherWarning.dwd.map.blackIce'),
             'frost' => WCF::getLanguage()->get('wcf.weatherWarning.dwd.map.frost'),
             'fog' => WCF::getLanguage()->get('wcf.weatherWarning.dwd.map.fog'),
@@ -65,7 +66,7 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
             'uv' => WCF::getLanguage()->get('wcf.weatherWarning.dwd.map.uv'),
         ];
 
-        asort($mapOptions);
+        \asort($mapOptions);
 
         return WCF::getTPL()->fetch('boxWeatherWarningGermanyConditions', 'wcf', [
             'map' => $this->map,
@@ -102,7 +103,9 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
         );
     }
 
-    public function getMapOptions(): array {}
+    public function getMapOptions(): array
+    {
+    }
 
     /**
      * @inheritDoc
@@ -139,5 +142,7 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
     /**
      * @inheritDoc
      */
-    public function validateConditions(): void {}
+    public function validateConditions(): void
+    {
+    }
 }

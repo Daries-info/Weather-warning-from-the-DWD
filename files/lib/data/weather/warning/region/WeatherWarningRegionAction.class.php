@@ -8,11 +8,11 @@ use wcf\system\exception\UserInputException;
 
 /**
  * Executes region related actions.
- * 
+ *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.dev - Free License <https://daries.dev/en/license-for-free-plugins>
- * 
+ *
  * @method      WeatherWarningRegion            create()
  * @method      WeatherWarningRegionEditor[]    getObjects()
  * @method      WeatherWarningRegionEditor      getSingleObject()
@@ -47,7 +47,7 @@ class WeatherWarningRegionAction extends AbstractDatabaseObjectAction implements
         foreach ($regionList as $region) {
             $list[] = [
                 'label' => $region->regionName,
-                'objectID' => $region->regionID
+                'objectID' => $region->regionID,
             ];
         }
 

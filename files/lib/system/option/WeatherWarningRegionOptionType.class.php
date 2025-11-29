@@ -9,7 +9,7 @@ use wcf\system\WCF;
 
 /**
  * Option type implementation for region input fields.
- * 
+ *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.dev - Free License <https://daries.dev/en/license-for-free-plugins>
@@ -25,8 +25,9 @@ class WeatherWarningRegionOptionType extends TextOptionType
             'option' => $option,
             'inputType' => $this->inputType,
             'inputClass' => $this->inputClass,
-            'value' => $value
+            'value' => $value,
         ]);
+
         return WCF::getTPL()->fetch('weatherWarningRegionOptionType');
     }
 

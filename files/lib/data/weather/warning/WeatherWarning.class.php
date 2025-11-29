@@ -2,16 +2,15 @@
 
 namespace wcf\data\weather\warning;
 
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
  * Represents a weather warning.
- * 
+ *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.dev - Free License <https://daries.dev/en/license-for-free-plugins>
- * 
+ *
  * @property-read int $type The type of the weather warning.
  * @property-read int $level The level of severity of the weather warning.
  * @property-read int $start The start time of the weather warning.
@@ -32,7 +31,7 @@ final class WeatherWarning
         private readonly int $type,
         private readonly int $level,
         private readonly int $start,
-        private readonly ?int $end = null,
+        private readonly ?int $end,
         private readonly string $event,
         private readonly string $regionName,
         private readonly string $state,

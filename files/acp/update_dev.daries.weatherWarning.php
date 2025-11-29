@@ -17,7 +17,7 @@ if ($box !== false) {
     $action = new BoxAction([$box], 'update', [
         'data' => [
             'additionalData' => \serialize($additionalData),
-        ]
+        ],
     ]);
     $action->executeAction();
 }

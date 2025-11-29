@@ -14,7 +14,7 @@ use wcf\util\JSON;
 
 /**
  * Weather warning handler.
- * 
+ *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.dev - Free License <https://daries.dev/en/license-for-free-plugins>
@@ -24,22 +24,22 @@ final class WeatherWarningHandler extends SingletonFactory
     /**
      * URL to the forest fire hazard index in Germany.
      */
-    const GERMANY_FORESTFIREHAZARDINDEXWBI_URL = 'https://www.dwd.de/DWD/warnungen/agrar/wbx/wbx_stationen.png';
+    public const GERMANY_FORESTFIREHAZARDINDEXWBI_URL = 'https://www.dwd.de/DWD/warnungen/agrar/wbx/wbx_stationen.png';
 
     /**
      * URL to grassland fire index in Germany.
      */
-    const GERMANY_GRASSLANDFIREINDEX_URL = 'https://www.dwd.de/DWD/warnungen/agrar/glfi/glfi_stationen.png';
+    public const GERMANY_GRASSLANDFIREINDEX_URL = 'https://www.dwd.de/DWD/warnungen/agrar/glfi/glfi_stationen.png';
 
     /**
      * URL for regional weather warnings in Germany.
      */
-    const GERMANY_REGION_URL = 'https://www.dwd.de/DWD/warnungen/warnapp/json/warnings.json';
+    public const GERMANY_REGION_URL = 'https://www.dwd.de/DWD/warnungen/warnapp/json/warnings.json';
 
     /**
      * URLs for various warning cards in Germany.
      */
-    const GERMANY_MAP_URLS = [
+    public const GERMANY_MAP_URLS = [
         'blackIce' => 'https://www.dwd.de/DWD/warnungen/warnapp_gemeinden/json/warnungen_gemeinde_map_de_glatteis.png',
         'frost' => 'https://www.dwd.de/DWD/warnungen/warnapp_gemeinden/json/warnungen_gemeinde_map_de_frost.png',
         'fog' => 'https://www.dwd.de/DWD/warnungen/warnapp_gemeinden/json/warnungen_gemeinde_map_de_nebel.png',
@@ -56,7 +56,7 @@ final class WeatherWarningHandler extends SingletonFactory
     /**
      * Package name for the registration action.
      */
-    const PACKAGE_NAME = "dev.daries.weatherWarning";
+    public const PACKAGE_NAME = "dev.daries.weatherWarning";
 
     /**
      * The HTTP client instance used for making requests.
@@ -77,6 +77,7 @@ final class WeatherWarningHandler extends SingletonFactory
     public function getGermanyMap(string $key): string
     {
         $key = \sprintf('germanyMap_%s', $key);
+
         return RegistryHandler::getInstance()->get(self::PACKAGE_NAME, $key) ?? "";
     }
 
@@ -106,6 +107,7 @@ final class WeatherWarningHandler extends SingletonFactory
     public function getWeatherWarning(): array
     {
         $weatherWarning = RegistryHandler::getInstance()->get(self::PACKAGE_NAME, "weatherWarning");
+
         return $weatherWarning !== null ? \unserialize($weatherWarning) : [];
     }
 
@@ -152,7 +154,7 @@ final class WeatherWarningHandler extends SingletonFactory
                 $response = $this->getHttpClient()->send($request);
                 $parsed = (string)$response->getBody();
 
-                preg_match('/warnWetter\.loadWarnings\((\{.*\})\);/', $parsed, $matches);
+                \preg_match('/warnWetter\.loadWarnings\((\{.*\})\);/', $parsed, $matches);
                 $parsed = $matches[1] ?? "{}";
 
                 try {
@@ -189,7 +191,7 @@ final class WeatherWarningHandler extends SingletonFactory
         $dataString = "";
         $response = null;
 
-        $request = new Request('GET', $url, ['accept' => 'image/*',]);
+        $request = new Request('GET', $url, ['accept' => 'image/*']);
         try {
             $response = $this->getHttpClient()->send($request);
 
@@ -208,7 +210,7 @@ final class WeatherWarningHandler extends SingletonFactory
             }
 
             if ($dataString !== "") {
-                $dataString = \sprintf("data:image/png;base64,%s", base64_encode($dataString));
+                $dataString = \sprintf("data:image/png;base64,%s", \base64_encode($dataString));
             }
 
             RegistryHandler::getInstance()->set(
@@ -225,7 +227,9 @@ final class WeatherWarningHandler extends SingletonFactory
     private function readWeatherWarning(array $weatherWarning): array
     {
         $list = [];
-        if (empty($weatherWarning)) return $list;
+        if (empty($weatherWarning)) {
+            return $list;
+        }
 
         foreach ($weatherWarning as $infos) {
             foreach ($infos as $info) {
@@ -234,6 +238,7 @@ final class WeatherWarningHandler extends SingletonFactory
                 $list[$weatherWarning->getRegionName()][] = $weatherWarning;
             }
         }
+
         return $list;
     }
 
@@ -242,10 +247,10 @@ final class WeatherWarningHandler extends SingletonFactory
      */
     private function sortWeatherWarnings(array &$weatherWarnings): void
     {
-        ksort($weatherWarnings);
+        \ksort($weatherWarnings);
 
         foreach ($weatherWarnings as &$warnings) {
-            \usort($warnings, fn($a, $b) => $a->getStart() <=> $b->getStart());
+            \usort($warnings, static fn($a, $b) => $a->getStart() <=> $b->getStart());
         }
     }
 }
