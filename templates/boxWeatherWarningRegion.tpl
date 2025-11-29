@@ -20,10 +20,14 @@
 						<dt><label>{lang}wcf.weatherWarning.start{/lang}</label></dt>
 						<dd>{time time=$warning->getStart() type='plainTime'}</dd>
 
-						{if $warning->getEnd()}
-							<dt><label>{lang}wcf.weatherWarning.end{/lang}</label></dt>
-							<dd>{time time=$warning->getEnd() type='plainTime'}</dd>
-						{/if}
+						<dt><label>{lang}wcf.weatherWarning.end{/lang}</label></dt>
+						<dd>
+							{if $warning->getEnd()}
+								{time time=$warning->getEnd() type='plainTime'}
+							{else}
+								{lang}wcf.weatherWarning.noEnd{/lang}
+							{/if}
+						</dd>
 					</dl>
 
 					<div class="description small">
