@@ -103,10 +103,6 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
         );
     }
 
-    public function getMapOptions(): array
-    {
-    }
-
     /**
      * @inheritDoc
      */
