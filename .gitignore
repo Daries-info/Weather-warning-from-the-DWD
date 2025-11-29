@@ -62,3 +62,5 @@ nbactions.xml
 *.tar
 *.tar.gz
 /node_modules/
+
+/vendor/
