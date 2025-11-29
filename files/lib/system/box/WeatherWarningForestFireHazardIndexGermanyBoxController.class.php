@@ -29,6 +29,9 @@ class WeatherWarningForestFireHazardIndexGermanyBoxController extends AbstractBo
         }
 
         $forestFireHazardIndexMap = WeatherWarningHandler::getInstance()->getForestFireHazardIndexWBI();
+	if ($forestFireHazardIndexMap === "") {
+	    return;
+	}
 
         $this->content = WCF::getTPL()->fetch(
             'boxWeatherWarningForestFireHazardIndexGermany',

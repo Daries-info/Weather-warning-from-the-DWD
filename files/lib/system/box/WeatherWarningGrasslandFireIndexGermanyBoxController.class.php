@@ -14,29 +14,32 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  */
 class WeatherWarningGrasslandFireIndexGermanyBoxController extends AbstractBoxController
 {
-    /**
-     * @inheritDoc
-     */
-    protected function loadContent(): void
-    {
-        if (!MODULE_WEATHER_WARNING || !WEATHER_WARNING_ENABLE_GRASSLAND_FIRE_INDEX) {
-            return;
-        }
+	/**
+	 * @inheritDoc
+	 */
+	protected function loadContent(): void
+	{
+		if (!MODULE_WEATHER_WARNING || !WEATHER_WARNING_ENABLE_GRASSLAND_FIRE_INDEX) {
+			return;
+		}
 
-        $user = WCF::getUser();
-        if ($user->userID && !$user->getUserOption('weatherWarningGrasslandFireIndexGermanyEnable')) {
-            return;
-        }
+		$user = WCF::getUser();
+		if ($user->userID && !$user->getUserOption('weatherWarningGrasslandFireIndexGermanyEnable')) {
+			return;
+		}
 
-        $grasslandFireIndexMap = WeatherWarningHandler::getInstance()->getGrasslandFireIndex();
+		$grasslandFireIndexMap = WeatherWarningHandler::getInstance()->getGrasslandFireIndex();
+		if ($grasslandFireIndexMap === "") {
+			return;
+		}
 
-        $this->content = WCF::getTPL()->fetch(
-            'boxWeatherWarningGrasslandFireIndexGermany',
-            'wcf',
-            [
-                'grasslandFireIndexMap' => $grasslandFireIndexMap,
-            ],
-            true
-        );
-    }
+		$this->content = WCF::getTPL()->fetch(
+			'boxWeatherWarningGrasslandFireIndexGermany',
+			'wcf',
+			[
+				'grasslandFireIndexMap' => $grasslandFireIndexMap,
+			],
+			true
+		);
+	}
 }

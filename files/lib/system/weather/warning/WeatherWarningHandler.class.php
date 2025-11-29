@@ -207,10 +207,14 @@ final class WeatherWarningHandler extends SingletonFactory
                 $response->getBody()->close();
             }
 
+            if ($dataString !== "") {
+                $dataString = \sprintf("data:image/png;base64,%s", base64_encode($dataString));
+            }
+
             RegistryHandler::getInstance()->set(
                 self::PACKAGE_NAME,
                 $name,
-                "data:image/png;base64," . base64_encode($dataString)
+                $dataString
             );
         }
     }
