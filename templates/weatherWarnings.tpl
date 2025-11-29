@@ -25,7 +25,7 @@
 				{foreach from=$warnings item=warning}
 					<li class="weatherWarningRegion">
 						<div class="headline">
-							{@$warning->getIcon()}
+							{unsafe:$warning->getIcon()}
 							<span>{$warning->getHeadline()}</span>
 						</div>
 
@@ -36,10 +36,12 @@
 
 						<dl class="plain dataList containerContent">
 							<dt><label>{lang}wcf.weatherWarning.start{/lang}</label></dt>
-							<dd>{@$warning->getStart()|plainTime}</dd>
+							<dd>{time time=$warning->getStart() type='plainTime'}</dd>
 
-							<dt><label>{lang}wcf.weatherWarning.end{/lang}</label></dt>
-							<dd>{@$warning->getEnd()|plainTime}</dd>
+							{if $warning->getEnd()}
+								<dt><label>{lang}wcf.weatherWarning.end{/lang}</label></dt>
+								<dd>{time time=$warning->getEnd() type='plainTime'}</dd>
+							{/if}
 						</dl>
 
 						<div class="description small">
@@ -60,7 +62,7 @@
 	<footer class="contentFooter">
 		{hascontent}
 		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
+			{content}{unsafe:$pagesLinks}{/content}
 		</div>
 		{/hascontent}
 
