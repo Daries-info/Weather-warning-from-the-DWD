@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/6.0/box.xsd">
-    <import>
-        <box identifier="dev.daries.weatherWarning.forestFireHazardIndexWBI">
-            <name language="de">Waldbrand-Gefahrenindex WBI (Deutschland)</name>
-            <name language="en">Forest Fire Hazard Index WBI (Germany)</name>
-            <boxType>system</boxType>
-            <position>sidebarRight</position>
-            <objectType>dev.daries.weatherWarning.forestFireHazardIndexWBI</objectType>
-            <showHeader>1</showHeader>
-            <visibleEverywhere>0</visibleEverywhere>
-            <visibilityExceptions>
-                <page>com.woltlab.wcf.Dashboard</page>
-            </visibilityExceptions>
-            <content language="de">
-                <title>Waldbrand-Gefahrenindex WBI</title>
-            </content>
-            <content language="en">
-                <title>Forest Fire Hazard Index WBI</title>
-            </content>
-        </box>
-        <box identifier="dev.daries.weatherWarning.germany">
-            <name language="de">Wetterwarnungen DWD (Deutschland)</name>
-            <name language="en">Weather warnings DWD (Germany)</name>
-            <boxType>system</boxType>
-            <position>sidebarRight</position>
-            <objectType>dev.daries.weatherWarning.germany</objectType>
-            <showHeader>1</showHeader>
-            <visibleEverywhere>0</visibleEverywhere>
-            <visibilityExceptions>
-                <page>com.woltlab.wcf.Dashboard</page>
-            </visibilityExceptions>
-            <content language="de">
-                <title>Wetterwarnungen DWD</title>
-            </content>
-            <content language="en">
-                <title>Weather warnings DWD</title>
-            </content>
-            <viewMapInfo>1</viewMapInfo>
-        </box>
-        <box identifier="dev.daries.weatherWarning.grasslandFireIndex">
-            <name language="de">Grasland - Feuerindex (Deutschland)</name>
-            <name language="en">Grassland - Fire Index (Germany)</name>
-            <boxType>system</boxType>
-            <position>sidebarRight</position>
-            <objectType>dev.daries.weatherWarning.grasslandFireIndex</objectType>
-            <showHeader>1</showHeader>
-            <visibleEverywhere>0</visibleEverywhere>
-            <visibilityExceptions>
-                <page>com.woltlab.wcf.Dashboard</page>
-            </visibilityExceptions>
-            <content language="de">
-                <title>Grasland - Feuerindex</title>
-            </content>
-            <content language="en">
-                <title>Grassland - Fire Index</title>
-            </content>
-        </box>
-        <box identifier="dev.daries.weatherWarning.region">
-            <name language="de">Wetterwarnungen DWD (Region)</name>
-            <name language="en">Weather warnings DWD (Region)</name>
-            <boxType>system</boxType>
-            <position>sidebarRight</position>
-            <objectType>dev.daries.weatherWarning.region</objectType>
-            <visibleEverywhere>0</visibleEverywhere>
-            <cssClassName>weatherWarningRegionBox</cssClassName>
-            <visibilityExceptions>
-                <page>com.woltlab.wcf.Dashboard</page>
-            </visibilityExceptions>
-        </box>
-    </import>
+	xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/6.0/box.xsd">
+	<import>
+		<box identifier="dev.daries.weatherWarning.forestFireHazardIndexWBI">
+			<name language="de">Waldbrand-Gefahrenindex WBI (Deutschland)</name>
+			<name language="en">Forest Fire Hazard Index WBI (Germany)</name>
+			<boxType>system</boxType>
+			<position>sidebarRight</position>
+			<objectType>dev.daries.weatherWarning.forestFireHazardIndexWBI</objectType>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			<content language="de">
+				<title>Waldbrand-Gefahrenindex WBI</title>
+			</content>
+			<content language="en">
+				<title>Forest Fire Hazard Index WBI</title>
+			</content>
+		</box>
+		<box identifier="dev.daries.weatherWarning.germany">
+			<name language="de">Wetterwarnungen DWD (Deutschland)</name>
+			<name language="en">Weather warnings DWD (Germany)</name>
+			<boxType>system</boxType>
+			<position>sidebarRight</position>
+			<objectType>dev.daries.weatherWarning.germany</objectType>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			<content language="de">
+				<title>Wetterwarnungen DWD</title>
+			</content>
+			<content language="en">
+				<title>Weather warnings DWD</title>
+			</content>
+			<viewMapInfo>1</viewMapInfo>
+		</box>
+		<box identifier="dev.daries.weatherWarning.grasslandFireIndex">
+			<name language="de">Grasland - Feuerindex (Deutschland)</name>
+			<name language="en">Grassland - Fire Index (Germany)</name>
+			<boxType>system</boxType>
+			<position>sidebarRight</position>
+			<objectType>dev.daries.weatherWarning.grasslandFireIndex</objectType>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			<content language="de">
+				<title>Grasland - Feuerindex</title>
+			</content>
+			<content language="en">
+				<title>Grassland - Fire Index</title>
+			</content>
+		</box>
+		<box identifier="dev.daries.weatherWarning.region">
+			<name language="de">Wetterwarnungen DWD (Region)</name>
+			<name language="en">Weather warnings DWD (Region)</name>
+			<boxType>system</boxType>
+			<position>sidebarRight</position>
+			<objectType>dev.daries.weatherWarning.region</objectType>
+			<visibleEverywhere>0</visibleEverywhere>
+			<cssClassName>weatherWarningRegionBox</cssClassName>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+		</box>
+	</import>
 </data>

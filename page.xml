@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/page.xsd">
-    <import>
-        <page identifier="dev.daries.weatherWarning.WeatherWarnings">
-            <pageType>system</pageType>
-            <controller>wcf\page\WeatherWarningsPage</controller>
-            <name language="de">Wetterwarnungen</name>
-            <name language="en">Weather Warnings</name>
-            <options>module_weather_warning</options>
-            <content language="en">
-                <title>Weather Warnings</title>
-            </content>
-            <content language="de">
-                <title>Wetterwarnungen</title>
-            </content>
-        </page>
-    </import>
+	xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/page.xsd">
+	<import>
+		<page identifier="dev.daries.weatherWarning.WeatherWarnings">
+			<pageType>system</pageType>
+			<controller>wcf\page\WeatherWarningsPage</controller>
+			<name language="de">Wetterwarnungen</name>
+			<name language="en">Weather Warnings</name>
+			<options>module_weather_warning</options>
+			<content language="en">
+				<title>Weather Warnings</title>
+			</content>
+			<content language="de">
+				<title>Wetterwarnungen</title>
+			</content>
+		</page>
+	</import>
 </data>
