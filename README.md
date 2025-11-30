@@ -10,4 +10,4 @@ If you want to support the development, you are allowed to use pull requests or 
 
 License
 ----------------
-Daries.dev - Free License <https://daries.dev/en/license-for-free-plugins>
+Daries.info - Free License <https://daries.info/license/free.html>
