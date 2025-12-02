@@ -25,7 +25,7 @@
 				{foreach from=$warnings item=warning}
 					<li class="weatherWarningRegion">
 						<div class="headline">
-							{unsafe:$warning->getIcon()}
+							{@$warning->getIcon()}
 							<span>{$warning->getHeadline()}</span>
 						</div>
 
@@ -67,7 +67,7 @@
 	<footer class="contentFooter">
 		{hascontent}
 		<div class="paginationBottom">
-			{content}{unsafe:$pagesLinks}{/content}
+			{content}{@$pagesLinks}{/content}
 		</div>
 		{/hascontent}
 

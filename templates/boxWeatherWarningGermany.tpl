@@ -1,7 +1,7 @@
 <div class="pointer" data-weather-info-full-view="{lang}wcf.weatherWarning.dwd{/lang}"
 	title="{lang}wcf.weatherWarning.viewFullSize{/lang}">
 	<div class="weatherWarningMap">
-		<img src="{unsafe:$germanyMap}" class="germanyMap" alt="">
+		<img src="{@$germanyMap}" class="germanyMap" alt="">
 
 		{if $viewMapInfo}
 			<div class="germanyMapInfo">
