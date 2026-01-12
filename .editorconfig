@@ -410,8 +410,8 @@ ij_javascript_while_on_new_line = true
 ij_javascript_wrap_comments = false
 
 [{*.ctp,*.hphp,*.inc,*.module,*.php,*.php4,*.php5,*.phtml}]
+indent_style = space
 indent_size = 4
-tab_width = 4
 ij_php_align_assignments = false
 ij_php_align_class_constants = false
 ij_php_align_group_field_declarations = false
