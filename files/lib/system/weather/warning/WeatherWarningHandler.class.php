@@ -2,15 +2,9 @@
 
 namespace wcf\system\weather\warning;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\TransferException;
-use GuzzleHttp\Psr7\Request;
 use wcf\data\weather\warning\WeatherWarning;
-use wcf\system\exception\SystemException;
-use wcf\system\io\HttpFactory;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\SingletonFactory;
-use wcf\util\JSON;
 
 /**
  * Weather warning handler.
@@ -25,6 +19,9 @@ final class WeatherWarningHandler extends SingletonFactory
      * Package name for the registration action.
      */
     public const PACKAGE_NAME = "dev.daries.weatherWarning";
+
+    /** @var array<string, WeatherWarning[]> */
+    private array $warnings;
 
     /**
      * Returns the forest fire hazard index.
@@ -54,12 +51,26 @@ final class WeatherWarningHandler extends SingletonFactory
 
     /**
      * Returns the weather warnings.
+     *
+     * @return array<string, WeatherWarning[]>
      */
     public function getWeatherWarning(): array
     {
-        $weatherWarning = RegistryHandler::getInstance()->get(self::PACKAGE_NAME, "weatherWarning");
+        if (!isset($this->warnings)) {
+            $this->warnings = [];
 
-        return $weatherWarning !== null ? \unserialize($weatherWarning) : [];
+            $weatherWarning = RegistryHandler::getInstance()->get(self::PACKAGE_NAME, "weatherWarning");
+
+            if ($weatherWarning !== null) {
+                $result = @\unserialize($weatherWarning);
+
+                if (\is_array($result)) {
+                    $this->warnings = $result;
+                }
+            }
+        }
+
+        return $this->warnings;
     }
 
     /**
