@@ -2,7 +2,7 @@
 
 namespace wcf\page;
 
-use wcf\system\event\EventHandler;
+use wcf\system\listView\user\WeatherWarningListView;
 use wcf\system\WCF;
 use wcf\system\weather\warning\WeatherWarningHandler;
 
@@ -13,63 +13,23 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  */
-class WeatherWarningsPage extends MultipleLinkPage
+class WeatherWarningsPage extends AbstractListViewPage
 {
-    /**
-     * @inheritDoc
-     */
     public $neededModules = ['MODULE_WEATHER_WARNING'];
 
-    /**
-     * @inheritDoc
-     */
-    public $itemsPerPage = 10;
-
-    /**
-     * list of weather warnings
-     */
-    public array $weatherWarnings;
-
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables(): void
     {
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'weatherWarnings' => $this->weatherWarnings,
             'warningTime' => WeatherWarningHandler::getInstance()->getWeatherWarningTime(),
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function countItems(): int
+    #[\Override]
+    protected function createListView(): WeatherWarningListView
     {
-        // call countItems event
-        EventHandler::getInstance()->fireAction($this, 'countItems');
-
-        return \count($this->weatherWarnings);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData(): void
-    {
-        AbstractPage::readData();
-
-        $this->weatherWarnings = WeatherWarningHandler::getInstance()->getWeatherWarning();
-
-        $this->calculateNumberOfPages();
-
-        $this->weatherWarnings = \array_slice(
-            $this->weatherWarnings,
-            $this->startIndex - 1,
-            $this->endIndex - $this->startIndex + 1,
-            true
-        );
+        return new WeatherWarningListView();
     }
 }

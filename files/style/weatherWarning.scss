@@ -184,3 +184,11 @@
 		margin-top: 10px;
 	}
 }
+
+.weatherWarning__listView {
+	> .weatherWarningRegion {
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+}

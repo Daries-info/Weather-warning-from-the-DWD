@@ -64,6 +64,7 @@
 			<item name="wcf.weatherWarning.more.information"><![CDATA[Mehr Informationen]]></item>
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Offen]]></item>
 			<item name="wcf.weatherWarning.notice"><![CDATA[Für Ihre Region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) liegt eine Wetterwarnung vom DWD vor!]]></item>
+			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
 			<item name="wcf.weatherWarning.region.info"><![CDATA[Info]]></item>
 			<item name="wcf.weatherWarning.region.info.text"><![CDATA[Die Regionenanzeige wurde vom Seitenadministrator konfiguriert.<br />
 <br />

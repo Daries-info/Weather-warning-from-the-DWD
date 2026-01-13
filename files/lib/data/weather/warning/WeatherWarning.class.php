@@ -2,6 +2,8 @@
 
 namespace wcf\data\weather\warning;
 
+use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
@@ -11,6 +13,7 @@ use wcf\system\WCF;
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  *
+ * @property-read string $warningID The unique ID of the weather warning.
  * @property-read int $type The type of the weather warning.
  * @property-read int $level The level of severity of the weather warning.
  * @property-read int $start The start time of the weather warning.
@@ -25,44 +28,44 @@ use wcf\system\WCF;
  * @property-read int|null $altitudeStart The starting altitude affected by the weather warning.
  * @property-read int|null $altitudeEnd The ending altitude affected by the weather warning.
  */
-final class WeatherWarning
+final class WeatherWarning extends DatabaseObject
 {
-    public function __construct(
-        private readonly int $type,
-        private readonly int $level,
-        private readonly int $start,
-        private readonly ?int $end,
-        private readonly string $event,
-        private readonly string $regionName,
-        private readonly string $state,
-        private readonly string $stateShort,
-        private readonly string $headline,
-        private readonly string $description,
-        private readonly string $instruction,
-        private readonly ?int $altitudeStart = null,
-        private readonly ?int $altitudeEnd = null
-    ) {
+    protected static $databaseTableIndexName = 'warningID';
+
+    /**
+     * Creates a new instance of WeatherWarning class.
+     *
+     * @param array<string, mixed> $row
+     */
+    protected function __construct(array $row)
+    {
+        parent::__construct(null, $row);
     }
 
     /**
      * Creates a new WeatherWarning instance from an associative array.
+     * 
+     * @param array<string, mixed> $warning
      */
     public static function createWarning(array $warning): self
     {
         return new self(
-            $warning['type'],
-            $warning['level'],
-            ($warning['start'] / 1000),
-            ($warning['end'] / 1000),
-            $warning['event'],
-            $warning['regionName'],
-            $warning['state'],
-            $warning['stateShort'],
-            $warning['headline'],
-            $warning['description'],
-            $warning['instruction'],
-            $warning['altitudeStart'],
-            $warning['altitudeEnd']
+            [
+                'altitudeEnd' => $warning['altitudeEnd'],
+                'altitudeStart' => $warning['altitudeStart'],
+                'description' => $warning['description'],
+                'end' => ($warning['end'] / 1000),
+                'event' => $warning['event'],
+                'headline' => $warning['headline'],
+                'instruction' => $warning['instruction'],
+                'level' => $warning['level'],
+                'regionName' => $warning['regionName'],
+                'start' => ($warning['start'] / 1000),
+                'state' => $warning['state'],
+                'stateShort' => $warning['stateShort'],
+                'warningID' => $warning['warningID'],
+                'type' => $warning['type']
+            ]
         );
     }
 
