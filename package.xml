@@ -7,8 +7,8 @@
         <packagename language="de">Wetterwarnungen vom DWD</packagename>
         <packagedescription>Displays the current severe weather warnings for Germany and your region.</packagedescription>
         <packagedescription language="de">Zeigt die aktuellen Unwetterwarnungen für Deutschland und deiner Region an.</packagedescription>
-        <version>1.5.4</version>
-        <date>2026-01-07</date>
+        <version>2.0.0</version>
+        <date>2026-01-12</date>
     </packageinformation>
 
     <authorinformation>
@@ -17,11 +17,11 @@
     </authorinformation>
 
     <requiredpackages>
-        <requiredpackage minversion="6.0.0">com.woltlab.wcf</requiredpackage>
+        <requiredpackage minversion="6.2.0 RC 3">com.woltlab.wcf</requiredpackage>
     </requiredpackages>
 
     <excludedpackages>
-        <excludedpackage version="6.2.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+        <excludedpackage version="6.3.0 Alpha 1">com.woltlab.wcf</excludedpackage>
         <excludedpackage version="*">de.lrde.weatherWarning</excludedpackage>
     </excludedpackages>
 
@@ -43,8 +43,9 @@
         <instruction type="script">acp/install_dev.daries.weatherWarning.php</instruction>
     </instructions>
 
-    <instructions type="update" fromversion="1.5.3">
-	<instruction type="cronjob" />
+    <instructions type="update" fromversion="1.5.4">
         <instruction type="file" />
+        <instruction type="template" />
+        <instruction type="language" />
     </instructions>
 </package>
