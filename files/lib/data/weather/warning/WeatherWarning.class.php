@@ -119,10 +119,11 @@ final class WeatherWarning extends DatabaseObject
         }
 
         return \sprintf(
-            '<img src="%simages/weather/icon_%d_%d.png" alt="">',
+            '<img src="%simages/weather/icon_%d_%d.webp" alt="%s" loading="lazy">',
             WCF::getPath(),
             $this->getType(),
-            $level
+            $level,
+            $this->getHeadline()
         );
     }
 
