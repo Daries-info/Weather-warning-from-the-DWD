@@ -18,8 +18,6 @@ nicht raten.
 - Minimum: PHP 8.3. Code muss bis einschließlich PHP 8.4 fehlerfrei laufen.
 - PHP-8.3-Features sind erlaubt und erwünscht: `readonly` auf Klassenebene,
   typed class constants, Enums, First-class callable syntax.
-- Strikte Typisierung (`declare(strict_types=1)`), vollständige Typehints
-  inkl. Rückgabetypen.
 - PHPStan Level 6 muss ohne Fehler bestehen – bei jeder Änderung beachten.
 - Formulare: `FormBuilder` verwenden, kein manuelles Formularhandling.
 - Tabellarische ACP-Ansichten: `Grid Views` oder `List Views`, keine
