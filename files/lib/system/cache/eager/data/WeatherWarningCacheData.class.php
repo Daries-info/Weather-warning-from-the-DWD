@@ -10,6 +10,7 @@ use wcf\data\weather\warning\WeatherWarning;
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
+ * @since 2.0.1
  */
 final class WeatherWarningCacheData
 {
