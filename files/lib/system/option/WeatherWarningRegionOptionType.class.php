@@ -36,7 +36,7 @@ class WeatherWarningRegionOptionType extends TextOptionType
      */
     public function validate(Option $option, $newValue): void
     {
-        if (!empty($newValue)) {
+        if ($newValue !== null && $newValue !== '') {
             $regionList = new WeatherWarningRegionList();
             $regionList->getConditionBuilder()->add('regionName = ?', [$newValue]);
             $count = $regionList->countObjects();

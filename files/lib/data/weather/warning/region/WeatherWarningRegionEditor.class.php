@@ -11,9 +11,7 @@ use wcf\data\DatabaseObjectEditor;
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  *
- * @method static   WeatherWarningRegion    create(array $parameters = [])
- * @method          WeatherWarningRegion    getDecoratedObject()
- * @mixin           WeatherWarningRegion
+ * @extends DatabaseObjectEditor<WeatherWarningRegion>
  */
 class WeatherWarningRegionEditor extends DatabaseObjectEditor
 {

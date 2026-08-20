@@ -14,5 +14,7 @@ use wcf\system\listView\user\WeatherWarningListView;
  */
 final class WeatherWarningListViewInitialized implements IPsr14Event
 {
-    public function __construct(public readonly WeatherWarningListView $listView) {}
+    public function __construct(public readonly WeatherWarningListView $listView)
+    {
+    }
 }

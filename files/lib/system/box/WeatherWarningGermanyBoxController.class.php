@@ -108,11 +108,11 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
      */
     public function readConditions(): void
     {
-        if (!empty($_POST['map'])) {
+        if (($_POST['map'] ?? '') !== '') {
             $this->map = StringUtil::trim($_POST['map']);
         }
 
-        if (!empty($_POST['viewMapInfo'])) {
+        if ((int)($_POST['viewMapInfo'] ?? 0) === 1) {
             $this->viewMapInfo = true;
         }
     }
@@ -120,17 +120,17 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
     /**
      * @inheritDoc
      */
-    public function setBox(Box $box, $setConditionData = true): void
+    public function setBox(Box $box, bool $setConditionData = true): void
     {
         parent::setBox($box);
 
         if ($setConditionData) {
-            if ($this->box->map) {
-                $this->map = $this->box->map;
+            if (($this->box->additionalData['map'] ?? '') !== '') {
+                $this->map = $this->box->additionalData['map'];
             }
 
-            if ($this->box->viewMapInfo) {
-                $this->viewMapInfo = $this->box->viewMapInfo;
+            if ((int)($this->box->additionalData['viewMapInfo'] ?? 0) === 1) {
+                $this->viewMapInfo = true;
             }
         }
     }

@@ -10,9 +10,7 @@ parameters:
         max: 80499
     paths:
         - files
-        - files_wcf
     scanDirectories:
-        - ../Country-Flags
         - ../../../../mnt/storagebox2-coding/raw/WCF-6.2/wcfsetup/install/files
     scanFiles:
         - constants.php

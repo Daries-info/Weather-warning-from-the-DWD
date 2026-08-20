@@ -2,6 +2,7 @@
 
 namespace wcf\system\weather\warning;
 
+use wcf\data\weather\warning\WeatherWarning;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -20,6 +21,8 @@ class UserWeatherWarningHandler extends SingletonFactory
 
     /**
      * All weather warnings from DWD.
+     *
+     * @var array<string, WeatherWarning[]>
      */
     protected array $warnings = [];
 
@@ -33,6 +36,8 @@ class UserWeatherWarningHandler extends SingletonFactory
 
     /**
      * Returns the weather warnings for the current region.
+     *
+     * @return WeatherWarning[]
      */
     public function getWarnings(): array
     {
@@ -44,7 +49,7 @@ class UserWeatherWarningHandler extends SingletonFactory
      */
     public function hasWarnings(): bool
     {
-        return !empty($this->getWarnings());
+        return $this->getWarnings() !== [];
     }
 
     /**
@@ -64,7 +69,7 @@ class UserWeatherWarningHandler extends SingletonFactory
         if ($user->userID) {
             $userRegion = $user->getUserOption('weatherWarningRegion');
 
-            if (!empty($userRegion)) {
+            if ($userRegion !== null && $userRegion !== '') {
                 $this->setRegion($userRegion);
             }
         }

@@ -2,8 +2,8 @@
 
 namespace wcf\system\listView\user;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
+use wcf\data\weather\warning\WeatherWarning;
 use wcf\event\listView\user\WeatherWarningListViewInitialized;
 use wcf\system\listView\AbstractListView;
 use wcf\system\view\filter\SelectFilter;
@@ -17,11 +17,11 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  *
- * @extends AbstractGridView<DatabaseObject, DatabaseObjectList>
+ * @extends AbstractListView<WeatherWarning, DatabaseObjectList<WeatherWarning>>
  */
 class WeatherWarningListView extends AbstractListView
 {
-    /** array<string, string> */
+    /** @var array<string, string> */
     private array $availableRegions;
 
     public function __construct()
@@ -40,12 +40,14 @@ class WeatherWarningListView extends AbstractListView
     }
 
     /**
-     * @return DatabaseObjectList<DatabaseObject>
+     * @return DatabaseObjectList<WeatherWarning>
      */
     #[\Override]
     protected function createObjectList(): DatabaseObjectList
     {
-        return new class extends DatabaseObjectList {};
+        return new class extends DatabaseObjectList {
+            public $className = WeatherWarning::class;
+        };
     }
 
     #[\Override]
@@ -99,7 +101,7 @@ class WeatherWarningListView extends AbstractListView
 
         $objects = $this->loadDataSource();
         $this->objectCount = \count($objects);
-        \uasort($objects, function (DatabaseObject $a, DatabaseObject $b) {
+        \uasort($objects, function (WeatherWarning $a, WeatherWarning $b) {
             $order = $this->getSortOrder() === 'ASC' ? 1 : -1;
 
             // Sort by regionName first
@@ -121,7 +123,7 @@ class WeatherWarningListView extends AbstractListView
     }
 
     /**
-     * @return array<string, DatabaseObject>
+     * @return array<int, WeatherWarning>
      */
     protected function loadDataSource(): array
     {
@@ -132,7 +134,6 @@ class WeatherWarningListView extends AbstractListView
             $list = [];
             foreach ($this->getAvailableRegions() as $availableRegion) {
                 if (\str_contains($availableRegion, $region)) {
-
                     foreach ($weatherWarnings[$availableRegion] as $warning) {
                         $list[$warning->getObjectID()] = $warning;
                     }

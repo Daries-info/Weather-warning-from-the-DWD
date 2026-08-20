@@ -3,7 +3,8 @@
 namespace wcf\system\weather\warning;
 
 use wcf\data\weather\warning\WeatherWarning;
-use wcf\system\registry\RegistryHandler;
+use wcf\system\cache\eager\data\WeatherWarningCacheData;
+use wcf\system\cache\eager\WeatherWarningCache;
 use wcf\system\SingletonFactory;
 
 /**
@@ -15,20 +16,14 @@ use wcf\system\SingletonFactory;
  */
 final class WeatherWarningHandler extends SingletonFactory
 {
-    /**
-     * Package name for the registration action.
-     */
-    public const PACKAGE_NAME = "dev.daries.weatherWarning";
-
-    /** @var array<string, WeatherWarning[]> */
-    private array $warnings;
+    private WeatherWarningCacheData $cache;
 
     /**
      * Returns the forest fire hazard index.
      */
     public function getForestFireHazardIndexWBI(): string
     {
-        return RegistryHandler::getInstance()->get(self::PACKAGE_NAME, "forestFireHazardIndexWBI") ?? "";
+        return $this->getCache()->forestFireHazardIndexWBI;
     }
 
     /**
@@ -36,9 +31,7 @@ final class WeatherWarningHandler extends SingletonFactory
      */
     public function getGermanyMap(string $key): string
     {
-        $key = \sprintf('germanyMap_%s', $key);
-
-        return RegistryHandler::getInstance()->get(self::PACKAGE_NAME, $key) ?? "";
+        return $this->getCache()->getGermanyMap($key);
     }
 
     /**
@@ -46,7 +39,7 @@ final class WeatherWarningHandler extends SingletonFactory
      */
     public function getGrasslandFireIndex(): string
     {
-        return RegistryHandler::getInstance()->get(self::PACKAGE_NAME, "grasslandFireIndex") ?? "";
+        return $this->getCache()->grasslandFireIndex;
     }
 
     /**
@@ -56,21 +49,7 @@ final class WeatherWarningHandler extends SingletonFactory
      */
     public function getWeatherWarning(): array
     {
-        if (!isset($this->warnings)) {
-            $this->warnings = [];
-
-            $weatherWarning = RegistryHandler::getInstance()->get(self::PACKAGE_NAME, "weatherWarning");
-
-            if ($weatherWarning !== null) {
-                $result = @\unserialize($weatherWarning);
-
-                if (\is_array($result)) {
-                    $this->warnings = $result;
-                }
-            }
-        }
-
-        return $this->warnings;
+        return $this->getCache()->warnings;
     }
 
     /**
@@ -78,6 +57,15 @@ final class WeatherWarningHandler extends SingletonFactory
      */
     public function getWeatherWarningTime(): int
     {
-        return RegistryHandler::getInstance()->get(self::PACKAGE_NAME, "weatherWarningTime") ?? 0;
+        return $this->getCache()->time;
+    }
+
+    private function getCache(): WeatherWarningCacheData
+    {
+        if (!isset($this->cache)) {
+            $this->cache = (new WeatherWarningCache())->getCache();
+        }
+
+        return $this->cache;
     }
 }

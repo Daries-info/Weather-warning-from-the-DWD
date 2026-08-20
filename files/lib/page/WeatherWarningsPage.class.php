@@ -12,6 +12,8 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
+ *
+ * @extends AbstractListViewPage<WeatherWarningListView>
  */
 class WeatherWarningsPage extends AbstractListViewPage
 {

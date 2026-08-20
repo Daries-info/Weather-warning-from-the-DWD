@@ -2,9 +2,9 @@
 
 namespace wcf\data\weather\warning;
 
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a weather warning.
@@ -44,7 +44,7 @@ final class WeatherWarning extends DatabaseObject
 
     /**
      * Creates a new WeatherWarning instance from an associative array.
-     * 
+     *
      * @param array<string, mixed> $warning
      */
     public static function createWarning(array $warning): self
@@ -64,7 +64,7 @@ final class WeatherWarning extends DatabaseObject
                 'state' => $warning['state'],
                 'stateShort' => $warning['stateShort'],
                 'warningID' => $warning['warningID'],
-                'type' => $warning['type']
+                'type' => $warning['type'],
             ]
         );
     }
@@ -123,7 +123,7 @@ final class WeatherWarning extends DatabaseObject
             WCF::getPath(),
             $this->getType(),
             $level,
-            $this->getHeadline()
+            StringUtil::encodeHTML($this->getHeadline())
         );
     }
 

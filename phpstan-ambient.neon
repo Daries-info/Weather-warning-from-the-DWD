@@ -1,3 +1,7 @@
 parameters:
     universalObjectCratesClasses:
     dynamicConstantNames:
+        - MODULE_WEATHER_WARNING
+        - WEATHER_WARNING_DEFAULT_REGION
+        - WEATHER_WARNING_ENABLE_FOREST_FIRE_HAZARD_INDEX_WBI
+        - WEATHER_WARNING_ENABLE_GRASSLAND_FIRE_INDEX

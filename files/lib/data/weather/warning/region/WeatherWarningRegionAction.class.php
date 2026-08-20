@@ -16,6 +16,8 @@ use wcf\system\exception\UserInputException;
  * @method      WeatherWarningRegion            create()
  * @method      WeatherWarningRegionEditor[]    getObjects()
  * @method      WeatherWarningRegionEditor      getSingleObject()
+ *
+ * @extends AbstractDatabaseObjectAction<WeatherWarningRegion, WeatherWarningRegionEditor>
  */
 class WeatherWarningRegionAction extends AbstractDatabaseObjectAction implements ISearchAction
 {
@@ -38,7 +40,7 @@ class WeatherWarningRegionAction extends AbstractDatabaseObjectAction implements
 
         $regionList = new WeatherWarningRegionList();
         $regionList->getConditionBuilder()->add("regionName LIKE ?", ['%' . $searchString . '%']);
-        if (!empty($excludedSearchValues)) {
+        if ($excludedSearchValues !== []) {
             $regionList->getConditionBuilder()->add("regionName NOT IN (?)", [$excludedSearchValues]);
         }
         $regionList->sqlLimit = 10;
