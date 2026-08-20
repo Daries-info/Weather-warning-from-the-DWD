@@ -61,6 +61,7 @@
 			<item name="wcf.weatherWarning.forestFireHazardIndex"><![CDATA[Forest Fire Hazard Index WBI]]></item>
 			<item name="wcf.weatherWarning.grasslandFireIndex"><![CDATA[Grassland - Fire Index]]></item>
 			<item name="wcf.weatherWarning.more.information"><![CDATA[More information]]></item>
+			<item name="wcf.weatherWarning.noData"><![CDATA[There is currently no weather warning data available yet. Please check back shortly.]]></item>
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Open]]></item>
 			<item name="wcf.weatherWarning.notice"><![CDATA[For your region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) there is a weather warning from the DWD!]]></item>
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>

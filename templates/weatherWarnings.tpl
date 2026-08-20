@@ -6,8 +6,12 @@
 
 {include file='header'}
 
-<div class="section {$listView->getContainerCssClassName()}">
-	{unsafe:$listView->render()}
-</div>
+{if $hasWeatherWarningData}
+	<div class="section {$listView->getContainerCssClassName()}">
+		{unsafe:$listView->render()}
+	</div>
+{else}
+	<p class="info">{lang}wcf.weatherWarning.noData{/lang}</p>
+{/if}
 
 {include file='footer'}

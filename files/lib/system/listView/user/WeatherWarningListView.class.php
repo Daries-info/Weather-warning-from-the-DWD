@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\weather\warning\WeatherWarning;
 use wcf\event\listView\user\WeatherWarningListViewInitialized;
 use wcf\system\listView\AbstractListView;
+use wcf\system\listView\ListViewSortField;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 use wcf\system\weather\warning\WeatherWarningHandler;
@@ -30,6 +31,7 @@ class WeatherWarningListView extends AbstractListView
             new SelectFilter($this->getAvailableRegions(), 'region', 'wcf.weatherWarning.region'),
         ]);
 
+        $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
         $this->setDefaultSortField('regionName');
     }
 
