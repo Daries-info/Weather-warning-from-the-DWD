@@ -16,6 +16,10 @@
       "*": ["node_modules/@woltlab/d.ts/*"]
     },
     "importHelpers": true,
-    "newLine": "lf"
+    "newLine": "lf",
+    "ignoreDeprecations": "6.0",
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "skipLibCheck": true
   }
 }
