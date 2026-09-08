@@ -5,9 +5,11 @@ namespace wcf\system\listView\user;
 use wcf\data\DatabaseObjectList;
 use wcf\data\weather\warning\WeatherWarning;
 use wcf\event\listView\user\WeatherWarningListViewInitialized;
+use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\listView\AbstractListView;
 use wcf\system\listView\ListViewSortField;
-use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\MultipleSelectFilter;
 use wcf\system\WCF;
 use wcf\system\weather\warning\WeatherWarningHandler;
 
@@ -28,7 +30,17 @@ class WeatherWarningListView extends AbstractListView
     public function __construct()
     {
         $this->addAvailableFilters([
-            new SelectFilter($this->getAvailableRegions(), 'region', 'wcf.weatherWarning.region'),
+            new class($this->getAvailableRegions(), 'region', 'wcf.weatherWarning.region') extends MultipleSelectFilter {
+                #[\Override]
+                public function getFormField(): AbstractFormField
+                {
+                    /** @var MultipleSelectionFormField $formField */
+                    $formField = parent::getFormField();
+                    $formField->filterable(true);
+
+                    return $formField;
+                }
+            },
         ]);
 
         $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
@@ -131,14 +143,14 @@ class WeatherWarningListView extends AbstractListView
     {
         $weatherWarnings = WeatherWarningHandler::getInstance()->getWeatherWarning();
 
-        $region = $this->getActiveFilters()['region'] ?? '';
-        if ($region !== '') {
+        $regionFilterValue = $this->getActiveFilters()['region'] ?? '';
+        if ($regionFilterValue !== '') {
+            $regions = \explode(',', $regionFilterValue);
+
             $list = [];
-            foreach ($this->getAvailableRegions() as $availableRegion) {
-                if (\str_contains($availableRegion, $region)) {
-                    foreach ($weatherWarnings[$availableRegion] as $warning) {
-                        $list[$warning->getObjectID()] = $warning;
-                    }
+            foreach ($regions as $region) {
+                foreach ($weatherWarnings[$region] ?? [] as $warning) {
+                    $list[$warning->getObjectID()] = $warning;
                 }
             }
 
