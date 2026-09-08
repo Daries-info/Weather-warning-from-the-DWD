@@ -45,6 +45,7 @@
 
     <instructions type="update" fromversion="2.0.0">
         <instruction type="file" />
+        <instruction type="fileDelete" />
         <instruction type="template" />
         <instruction type="language" />
         <instruction type="script">acp/update_dev.daries.weatherWarning_2.0.1.php</instruction>
