@@ -8,23 +8,25 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
+ * Weather warning handler for the current user.
+ *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  */
-class UserWeatherWarningHandler extends SingletonFactory
+final class UserWeatherWarningHandler extends SingletonFactory
 {
     /**
      * region
      */
-    protected string $region = '';
+    private string $region = '';
 
     /**
      * All weather warnings from DWD.
      *
      * @var array<string, WeatherWarning[]>
      */
-    protected array $warnings = [];
+    private array $warnings = [];
 
     /**
      * Returns the current region.
