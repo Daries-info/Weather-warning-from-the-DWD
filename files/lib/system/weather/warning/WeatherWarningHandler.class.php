@@ -3,8 +3,8 @@
 namespace wcf\system\weather\warning;
 
 use wcf\data\weather\warning\WeatherWarning;
-use wcf\system\cache\eager\data\WeatherWarningCacheData;
-use wcf\system\cache\eager\WeatherWarningCache;
+use wcf\system\cache\tolerant\data\WeatherWarningCacheData;
+use wcf\system\cache\tolerant\WeatherWarningCache;
 use wcf\system\SingletonFactory;
 
 /**

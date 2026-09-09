@@ -1,25 +1,25 @@
 <?php
 
-namespace wcf\system\cache\eager;
+namespace wcf\system\cache\tolerant;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
 use wcf\data\weather\warning\WeatherWarning;
-use wcf\system\cache\eager\data\WeatherWarningCacheData;
+use wcf\system\cache\tolerant\data\WeatherWarningCacheData;
 use wcf\system\io\HttpFactory;
 
 /**
- * Eager cache implementation for DWD weather warnings, warning maps and fire indices.
+ * Tolerant cache implementation for DWD weather warnings, warning maps and fire indices.
  *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  * @since 2.0.1
  *
- * @extends AbstractEagerCache<WeatherWarningCacheData>
+ * @extends AbstractTolerantCache<WeatherWarningCacheData>
  */
-final class WeatherWarningCache extends AbstractEagerCache
+final class WeatherWarningCache extends AbstractTolerantCache
 {
     /**
      * URL to the forest fire hazard index in Germany.
@@ -53,16 +53,28 @@ final class WeatherWarningCache extends AbstractEagerCache
         'uv' => 'https://www.dwd.de/DWD/warnungen/warnapp_gemeinden/json/warnungen_gemeinde_map_de_uv.png',
     ];
 
+    /**
+     * Rebuilds no more often than every 15 minutes, matching the DWD's own update cadence.
+     */
+    private const LIFETIME = 900;
+
     private ClientInterface $httpClient;
 
-    /**
-     * Prevents infinite recursion when {@see self::getPreviousCacheData()} falls back to
-     * {@see self::getCache()} while a rebuild for this very instance is already in progress.
-     */
-    private bool $isReadingPreviousCacheData = false;
-
     #[\Override]
-    protected function getCacheData(): WeatherWarningCacheData
+    public function getLifetime(): int
+    {
+        return self::LIFETIME;
+    }
+
+    /**
+     * Fetches all warnings, maps and fire indices from the DWD.
+     *
+     * If any single resource cannot be loaded, the whole rebuild is aborted and the
+     * previously cached (now merely stale) data continues to be served, instead of
+     * overwriting good data with a partial or empty result.
+     */
+    #[\Override]
+    protected function rebuildCacheData(): WeatherWarningCacheData
     {
         $forestFireHazardIndexWBI = '';
         if (WEATHER_WARNING_ENABLE_FOREST_FIRE_HAZARD_INDEX_WBI) {
@@ -79,20 +91,7 @@ final class WeatherWarningCache extends AbstractEagerCache
             $germanyMaps[$mapKey] = $this->loadImage($mapURL);
         }
 
-        // The warnings are the safety-relevant part of this cache: if the DWD cannot be
-        // reached, keep the last known good data instead of wiping it to an empty list.
-        $warnings = [];
-        $time = 0;
-        $freshWeatherWarning = $this->loadWeatherWarnings();
-        if ($freshWeatherWarning !== null) {
-            [$warnings, $time] = $freshWeatherWarning;
-        } else {
-            $previous = $this->getPreviousCacheData();
-            if ($previous !== null) {
-                $warnings = $previous->warnings;
-                $time = $previous->time;
-            }
-        }
+        [$warnings, $time] = $this->loadWeatherWarnings();
 
         return new WeatherWarningCacheData($warnings, $time, $forestFireHazardIndexWBI, $grasslandFireIndex, $germanyMaps);
     }
@@ -110,8 +109,9 @@ final class WeatherWarningCache extends AbstractEagerCache
     }
 
     /**
-     * Loads an image from the given URL and returns it as a base64-encoded data URI,
-     * or an empty string if the image could not be loaded.
+     * Loads an image from the given URL and returns it as a base64-encoded data URI.
+     *
+     * @throws \RuntimeException if the image could not be loaded.
      */
     private function loadImage(string $url): string
     {
@@ -123,20 +123,16 @@ final class WeatherWarningCache extends AbstractEagerCache
             $response = $this->getHttpClient()->send($request);
 
             while (!$response->getBody()->eof()) {
-                try {
-                    $dataString .= $response->getBody()->read(8192);
-                } catch (\RuntimeException $e) {
-                    return '';
-                }
+                $dataString .= $response->getBody()->read(8192);
             }
-        } catch (TransferException $e) {
-            return '';
+        } catch (TransferException|\RuntimeException $e) {
+            throw new \RuntimeException(\sprintf("Failed to load weather warning image from '%s'.", $url), previous: $e);
         } finally {
             $response?->getBody()->close();
         }
 
         if ($dataString === '') {
-            return '';
+            throw new \RuntimeException(\sprintf("Received an empty weather warning image from '%s'.", $url));
         }
 
         return \sprintf('data:image/png;base64,%s', \base64_encode($dataString));
@@ -145,37 +141,33 @@ final class WeatherWarningCache extends AbstractEagerCache
     /**
      * Loads and parses the regional weather warnings.
      *
-     * @return array{0: array<string, WeatherWarning[]>, 1: int}|null `null` if the warnings could not be loaded.
+     * @return array{0: array<string, WeatherWarning[]>, 1: int}
+     * @throws \RuntimeException if the warnings could not be loaded or parsed.
      */
-    private function loadWeatherWarnings(): ?array
+    private function loadWeatherWarnings(): array
     {
         $request = new Request('GET', self::GERMANY_REGION_URL, [
             'accept' => 'application/json',
         ]);
 
-        $weatherWarning = [];
         try {
             $response = $this->getHttpClient()->send($request);
             $parsed = (string)$response->getBody();
-
-            \preg_match('/warnWetter\.loadWarnings\((\{.*\})\);/', $parsed, $matches);
-            $parsed = $matches[1] ?? '{}';
-
-            try {
-                $weatherWarning = \json_decode($parsed, true, flags: \JSON_THROW_ON_ERROR);
-            } catch (\JsonException $e) {
-                if (ENABLE_DEBUG_MODE) {
-                    throw $e;
-                }
-
-                return null;
-            }
         } catch (TransferException $e) {
-            return null;
+            throw new \RuntimeException('Failed to load weather warnings from the DWD.', previous: $e);
+        }
+
+        \preg_match('/warnWetter\.loadWarnings\((\{.*\})\);/', $parsed, $matches);
+        $parsed = $matches[1] ?? '{}';
+
+        try {
+            $weatherWarning = \json_decode($parsed, true, flags: \JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            throw new \RuntimeException('Failed to parse weather warnings from the DWD.', previous: $e);
         }
 
         if ($weatherWarning === []) {
-            return null;
+            throw new \RuntimeException('Received no weather warning data from the DWD.');
         }
 
         $warnings = \array_merge_recursive(
@@ -226,23 +218,6 @@ final class WeatherWarningCache extends AbstractEagerCache
 
         foreach ($weatherWarnings as &$warnings) {
             \usort($warnings, static fn($a, $b) => $a->getStart() <=> $b->getStart());
-        }
-    }
-
-    /**
-     * Returns the currently cached data, if any, without triggering a nested rebuild.
-     */
-    private function getPreviousCacheData(): ?WeatherWarningCacheData
-    {
-        if ($this->isReadingPreviousCacheData) {
-            return null;
-        }
-
-        $this->isReadingPreviousCacheData = true;
-        try {
-            return $this->getCache();
-        } finally {
-            $this->isReadingPreviousCacheData = false;
         }
     }
 }

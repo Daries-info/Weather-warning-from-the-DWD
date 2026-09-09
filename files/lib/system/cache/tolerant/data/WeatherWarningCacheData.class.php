@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\cache\eager\data;
+namespace wcf\system\cache\tolerant\data;
 
 use wcf\data\weather\warning\WeatherWarning;
 
