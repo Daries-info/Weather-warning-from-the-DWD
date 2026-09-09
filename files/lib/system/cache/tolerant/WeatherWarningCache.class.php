@@ -171,8 +171,8 @@ final class WeatherWarningCache extends AbstractTolerantCache
         }
 
         $warnings = \array_merge_recursive(
-            $this->readWeatherWarning($weatherWarning['warnings'] ?? []),
-            $this->readWeatherWarning($weatherWarning['vorabInformation'] ?? [])
+            $this->readWeatherWarning($weatherWarning['warnings'] ?? [], 'warning'),
+            $this->readWeatherWarning($weatherWarning['vorabInformation'] ?? [], 'preliminary')
         );
 
         $this->sortWeatherWarnings($warnings);
@@ -186,7 +186,7 @@ final class WeatherWarningCache extends AbstractTolerantCache
      * @param array<string, array<int, array<string, mixed>>> $weatherWarning
      * @return array<string, WeatherWarning[]>
      */
-    private function readWeatherWarning(array $weatherWarning): array
+    private function readWeatherWarning(array $weatherWarning, string $sourcePrefix): array
     {
         $list = [];
         if ($weatherWarning === []) {
@@ -196,7 +196,7 @@ final class WeatherWarningCache extends AbstractTolerantCache
         $tempID = 0;
         foreach ($weatherWarning as $infos) {
             foreach ($infos as $info) {
-                $info['warningID'] = 'temp-' . $tempID++;
+                $info['warningID'] = \sprintf('temp-%s-%d', $sourcePrefix, $tempID++);
 
                 $weatherWarningObject = WeatherWarning::createWarning($info);
                 $list[$weatherWarningObject->getRegionName()] ??= [];
