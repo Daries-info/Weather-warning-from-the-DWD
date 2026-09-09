@@ -8,7 +8,7 @@ Boxen-Integration, mehrsprachig (DE/EN).
 
 ## Referenzen
 
-- WCF-Framework: `/mnt/storagebox2-coding/raw/WCF-6.2/`
+- WCF-Framework: `/raw/WCF-6.2/`
 
 Bei Unsicherheit zu WCF-APIs immer zuerst im Framework-Pfad nachsehen,
 nicht raten.
