@@ -3,8 +3,11 @@
 namespace wcf\system\cache\tolerant;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\weather\warning\WeatherWarning;
 use wcf\system\cache\tolerant\data\WeatherWarningCacheData;
 use wcf\system\io\HttpFactory;
@@ -58,6 +61,12 @@ final class WeatherWarningCache extends AbstractTolerantCache
      */
     private const LIFETIME = 900;
 
+    /**
+     * Maximum total transfer duration per request in seconds. Requests run concurrently,
+     * so this is also the upper bound for a complete rebuild.
+     */
+    private const HTTP_TIMEOUT = 10;
+
     private ClientInterface $httpClient;
 
     #[\Override]
@@ -69,94 +78,100 @@ final class WeatherWarningCache extends AbstractTolerantCache
     /**
      * Fetches all warnings, maps and fire indices from the DWD.
      *
-     * If any single resource cannot be loaded, the whole rebuild is aborted and the
-     * previously cached (now merely stale) data continues to be served, instead of
-     * overwriting good data with a partial or empty result.
+     * All resources are requested concurrently. If any single resource cannot be loaded,
+     * the whole rebuild is aborted and the previously cached (now merely stale) data
+     * continues to be served, instead of overwriting good data with a partial or empty result.
      */
     #[\Override]
     protected function rebuildCacheData(): WeatherWarningCacheData
     {
-        $forestFireHazardIndexWBI = '';
-        if (WEATHER_WARNING_ENABLE_FOREST_FIRE_HAZARD_INDEX_WBI) {
-            $forestFireHazardIndexWBI = $this->loadImage(self::GERMANY_FORESTFIREHAZARDINDEXWBI_URL);
-        }
+        $forestFireHazardIndexWBI = WEATHER_WARNING_ENABLE_FOREST_FIRE_HAZARD_INDEX_WBI
+            ? $this->requestImage(self::GERMANY_FORESTFIREHAZARDINDEXWBI_URL)
+            : Create::promiseFor('');
+        $grasslandFireIndex = WEATHER_WARNING_ENABLE_GRASSLAND_FIRE_INDEX
+            ? $this->requestImage(self::GERMANY_GRASSLANDFIREINDEX_URL)
+            : Create::promiseFor('');
+        $germanyMaps = \array_map($this->requestImage(...), self::GERMANY_MAP_URLS);
 
-        $grasslandFireIndex = '';
-        if (WEATHER_WARNING_ENABLE_GRASSLAND_FIRE_INDEX) {
-            $grasslandFireIndex = $this->loadImage(self::GERMANY_GRASSLANDFIREINDEX_URL);
-        }
-
-        $germanyMaps = [];
-        foreach (self::GERMANY_MAP_URLS as $mapKey => $mapURL) {
-            $germanyMaps[$mapKey] = $this->loadImage($mapURL);
-        }
-
-        [$warnings, $time] = $this->loadWeatherWarnings();
+        [$forestFireHazardIndexWBI, $grasslandFireIndex, $germanyMaps, [$warnings, $time]] = Utils::all([
+            $forestFireHazardIndexWBI,
+            $grasslandFireIndex,
+            Utils::all($germanyMaps),
+            $this->requestWeatherWarnings(),
+        ])->wait();
 
         return new WeatherWarningCacheData($warnings, $time, $forestFireHazardIndexWBI, $grasslandFireIndex, $germanyMaps);
     }
 
     /**
-     * Creates and configures an HTTP client with a timeout setting of 2 seconds.
+     * Creates and configures an HTTP client with a timeout setting of 10 seconds per request.
      */
     private function getHttpClient(): ClientInterface
     {
         if (!isset($this->httpClient)) {
-            $this->httpClient = HttpFactory::makeClientWithTimeout(2);
+            $this->httpClient = HttpFactory::makeClientWithTimeout(self::HTTP_TIMEOUT);
         }
 
         return $this->httpClient;
     }
 
     /**
-     * Loads an image from the given URL and returns it as a base64-encoded data URI.
+     * Requests an image from the given URL, resolving to a base64-encoded data URI.
      *
-     * @throws \RuntimeException if the image could not be loaded.
+     * The returned promise is rejected with a `\RuntimeException` if the image could not be loaded.
      */
-    private function loadImage(string $url): string
+    private function requestImage(string $url): PromiseInterface
     {
-        $dataString = '';
-        $response = null;
-
         $request = new Request('GET', $url, ['accept' => 'image/*']);
-        try {
-            $response = $this->getHttpClient()->send($request);
 
-            while (!$response->getBody()->eof()) {
-                $dataString .= $response->getBody()->read(8192);
+        return $this->getHttpClient()->sendAsync($request)->then(
+            static function (ResponseInterface $response) use ($url): string {
+                $dataString = (string)$response->getBody();
+                if ($dataString === '') {
+                    throw new \RuntimeException(\sprintf("Received an empty weather warning image from '%s'.", $url));
+                }
+
+                return \sprintf('data:image/png;base64,%s', \base64_encode($dataString));
+            },
+            static function (mixed $reason) use ($url): never {
+                throw new \RuntimeException(
+                    \sprintf("Failed to load weather warning image from '%s'.", $url),
+                    previous: $reason instanceof \Throwable ? $reason : null
+                );
             }
-        } catch (TransferException|\RuntimeException $e) {
-            throw new \RuntimeException(\sprintf("Failed to load weather warning image from '%s'.", $url), previous: $e);
-        } finally {
-            $response?->getBody()->close();
-        }
-
-        if ($dataString === '') {
-            throw new \RuntimeException(\sprintf("Received an empty weather warning image from '%s'.", $url));
-        }
-
-        return \sprintf('data:image/png;base64,%s', \base64_encode($dataString));
+        );
     }
 
     /**
-     * Loads and parses the regional weather warnings.
+     * Requests the regional weather warnings, resolving to the parsed warnings and their time.
      *
-     * @return array{0: array<string, WeatherWarning[]>, 1: int}
-     * @throws \RuntimeException if the warnings could not be loaded or parsed.
+     * The returned promise is rejected with a `\RuntimeException` if the warnings could not be loaded or parsed.
      */
-    private function loadWeatherWarnings(): array
+    private function requestWeatherWarnings(): PromiseInterface
     {
         $request = new Request('GET', self::GERMANY_REGION_URL, [
             'accept' => 'application/json',
         ]);
 
-        try {
-            $response = $this->getHttpClient()->send($request);
-            $parsed = (string)$response->getBody();
-        } catch (TransferException $e) {
-            throw new \RuntimeException('Failed to load weather warnings from the DWD.', previous: $e);
-        }
+        return $this->getHttpClient()->sendAsync($request)->then(
+            fn(ResponseInterface $response): array => $this->parseWeatherWarnings((string)$response->getBody()),
+            static function (mixed $reason): never {
+                throw new \RuntimeException(
+                    'Failed to load weather warnings from the DWD.',
+                    previous: $reason instanceof \Throwable ? $reason : null
+                );
+            }
+        );
+    }
 
+    /**
+     * Parses the regional weather warnings.
+     *
+     * @return array{0: array<string, WeatherWarning[]>, 1: int}
+     * @throws \RuntimeException if the warnings could not be parsed.
+     */
+    private function parseWeatherWarnings(string $parsed): array
+    {
         \preg_match('/warnWetter\.loadWarnings\((\{.*\})\);/', $parsed, $matches);
         $parsed = $matches[1] ?? '{}';
 

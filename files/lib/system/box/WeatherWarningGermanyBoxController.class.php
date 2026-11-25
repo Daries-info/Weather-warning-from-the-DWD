@@ -90,6 +90,9 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
         }
 
         $germanyMap = WeatherWarningHandler::getInstance()->getGermanyMap($this->map);
+        if ($germanyMap === '') {
+            return;
+        }
 
         $this->content = WCF::getTPL()->fetch(
             'boxWeatherWarningGermany',
