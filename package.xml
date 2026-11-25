@@ -7,7 +7,7 @@
         <packagename language="de">Wetterwarnungen vom DWD</packagename>
         <packagedescription>Displays the current severe weather warnings for Germany and your region.</packagedescription>
         <packagedescription language="de">Zeigt die aktuellen Unwetterwarnungen für Deutschland und deiner Region an.</packagedescription>
-        <version>2.0.1</version>
+        <version>2.0.2</version>
         <date>2026-09-08</date>
     </packageinformation>
 
@@ -42,12 +42,7 @@
         <instruction type="script">acp/install_dev.daries.weatherWarning.php</instruction>
     </instructions>
 
-    <instructions type="update" fromversion="2.0.0">
+    <instructions type="update" fromversion="2.0.1">
         <instruction type="file" />
-        <instruction type="fileDelete" />
-        <instruction type="cronjob" />
-        <instruction type="template" />
-        <instruction type="language" />
-        <instruction type="script">acp/update_dev.daries.weatherWarning_2.0.1.php</instruction>
     </instructions>
 </package>
