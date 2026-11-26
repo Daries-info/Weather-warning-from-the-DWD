@@ -22,6 +22,11 @@ final class UserWeatherWarningHandler extends SingletonFactory
     private string $region = '';
 
     /**
+     * True if the region is taken from the profile of the user.
+     */
+    private bool $isUserRegion = false;
+
+    /**
      * All weather warnings from DWD.
      *
      * @var array<string, WeatherWarning[]>
@@ -73,10 +78,21 @@ final class UserWeatherWarningHandler extends SingletonFactory
 
             if ($userRegion !== null && $userRegion !== '') {
                 $this->setRegion($userRegion);
+                $this->isUserRegion = true;
             }
         }
 
         EventHandler::getInstance()->fireAction($this, 'init');
+    }
+
+    /**
+     * Returns true if the region is not taken from the profile of the user, but set by the administrator.
+     *
+     * @since 2.0.2
+     */
+    public function isDefaultRegion(): bool
+    {
+        return !$this->isUserRegion;
     }
 
     /**

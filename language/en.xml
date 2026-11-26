@@ -35,6 +35,7 @@
 			<item name="wcf.weatherWarning.box.settings.map"><![CDATA[Map of Germany (by warning criteria)]]></item>
 			<item name="wcf.weatherWarning.box.settings.viewMapInfo"><![CDATA[Show map of Germany Information]]></item>
 			<item name="wcf.weatherWarning.dwd"><![CDATA[Weather warnings DWD]]></item>
+			<item name="wcf.weatherWarning.defaultRegion"><![CDATA[Our region]]></item>
 			<item name="wcf.weatherWarning.dwd.legend1"><![CDATA[Warnings of extreme weather (Level 4)]]></item>
 			<item name="wcf.weatherWarning.dwd.legend2"><![CDATA[Warnings of severe weather (Level 3)]]></item>
 			<item name="wcf.weatherWarning.dwd.legend3"><![CDATA[Warning of significant weather (Level 2)]]></item>
@@ -72,6 +73,8 @@
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Open]]></item>
 			<item name="wcf.weatherWarning.notice"><![CDATA[For your region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) there is a weather warning from the DWD!]]></item>
 			<item name="wcf.weatherWarning.onlyActive"><![CDATA[Only currently valid warnings]]></item>
+			<item name="wcf.weatherWarning.otherRegions"><![CDATA[Other warnings]]></item>
+			<item name="wcf.weatherWarning.ownRegion"><![CDATA[Your region]]></item>
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
 			<item name="wcf.weatherWarning.start"><![CDATA[Start]]></item>
 			<item name="wcf.weatherWarning.state"><![CDATA[Federal state]]></item>

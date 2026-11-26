@@ -13,6 +13,7 @@ use wcf\system\view\filter\BooleanFilter;
 use wcf\system\view\filter\MultipleSelectFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
+use wcf\system\weather\warning\UserWeatherWarningHandler;
 use wcf\system\weather\warning\WeatherWarningHandler;
 
 /**
@@ -228,6 +229,12 @@ class WeatherWarningListView extends AbstractListView
         $objects = $this->loadDataSource();
         $this->objectCount = \count($objects);
         \uasort($objects, function (WeatherWarning $a, WeatherWarning $b) {
+            // The warnings of the own region always come first.
+            $ownRegionComparison = $this->isOwnRegion($b) <=> $this->isOwnRegion($a);
+            if ($ownRegionComparison !== 0) {
+                return $ownRegionComparison;
+            }
+
             $order = $this->getSortOrder() === 'ASC' ? 1 : -1;
 
             // Sort by regionName first
@@ -240,6 +247,62 @@ class WeatherWarningListView extends AbstractListView
             return ($a->getStart() <=> $b->getStart()) * $order;
         });
         $this->objects = \array_slice($objects, ($this->getPageNo() - 1) * $this->getItemsPerPage(), $this->getItemsPerPage());
+    }
+
+    /**
+     * Returns the region of the user or the default region, if the user has not set one.
+     *
+     * @since 2.0.2
+     */
+    public function getOwnRegion(): string
+    {
+        return UserWeatherWarningHandler::getInstance()->getRegion();
+    }
+
+    /**
+     * Returns the weather warnings of the current page that belong to the own region.
+     *
+     * @return array<int, WeatherWarning>
+     * @since 2.0.2
+     */
+    public function getOwnRegionItems(): array
+    {
+        return \array_filter($this->getItems(), $this->isOwnRegion(...));
+    }
+
+    /**
+     * Returns the weather warnings of the current page that do not belong to the own region.
+     *
+     * @return array<int, WeatherWarning>
+     * @since 2.0.2
+     */
+    public function getOtherRegionItems(): array
+    {
+        return \array_filter($this->getItems(), fn(WeatherWarning $warning): bool => !$this->isOwnRegion($warning));
+    }
+
+    /**
+     * Returns true if the own region is shown in a section of its own. Without warnings for the own region,
+     * the section is only shown on the first page without filters, to point out that there are no warnings.
+     *
+     * @since 2.0.2
+     */
+    public function hasOwnRegionSection(): bool
+    {
+        if ($this->getOwnRegion() === '') {
+            return false;
+        }
+
+        if ($this->getOwnRegionItems() !== []) {
+            return true;
+        }
+
+        return $this->getPageNo() === 1 && $this->getActiveFilters() === [];
+    }
+
+    private function isOwnRegion(WeatherWarning $warning): bool
+    {
+        return $warning->getRegionName() === $this->getOwnRegion();
     }
 
     #[\Override]

@@ -6,7 +6,7 @@
 		{if !$region|empty}
 			{foreach from=$warnings item=warning}
 				<div class="weatherWarningRegion warningBox">
-					{include file='__weatherWarning'}
+					{include file='__weatherWarning' showLocation=false}
 				</div>
 			{foreachelse}
 				<p>{lang}wcf.weatherWarning.empty{/lang}</p>

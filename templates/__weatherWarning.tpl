@@ -16,6 +16,13 @@
 		</div>
 	</header>
 
+	{if $showLocation}
+		<div class="weatherWarning__location">
+			{icon name='location-dot'}
+			<span>{$warning->getRegionName()} · {$warning->getState()}</span>
+		</div>
+	{/if}
+
 	<dl class="plain weatherWarning__period">
 		<div>
 			<dt>{lang}wcf.weatherWarning.start{/lang}</dt>

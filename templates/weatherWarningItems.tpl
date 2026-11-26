@@ -1,36 +1,46 @@
-{assign var='__isNewRegion' value=true}
-{assign var='__currentRegionName' value=''}
-{assign var='__shouldCloseRegion' value=false}
+{if $view->hasOwnRegionSection()}
+	{assign var='region' value=$view->getOwnRegion()}
 
-{foreach from=$view->getItems() item='warning'}
-	{if $__currentRegionName !== $warning->getRegionName()}
-		{if !$__isNewRegion}
-			{assign var='__shouldCloseRegion' value=true}
+	<section class="section weatherWarning__gridContainer">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">
+				{if $__wcf->getUserWeatherWarningHandler()->isDefaultRegion()}
+					{lang}wcf.weatherWarning.defaultRegion{/lang}
+				{else}
+					{lang}wcf.weatherWarning.ownRegion{/lang}
+				{/if}
+				· {$region}
+			</h2>
+		</header>
+
+		{if $view->getOwnRegionItems()}
+			<ol class="weatherWarning__grid">
+				{foreach from=$view->getOwnRegionItems() item='warning'}
+					<li class="weatherWarning__card weatherWarning__card--ownRegion">
+						{include file='__weatherWarning' showLocation=true}
+					</li>
+				{/foreach}
+			</ol>
+		{else}
+			<p class="info">{lang}wcf.weatherWarning.empty{/lang}</p>
+		{/if}
+	</section>
+{/if}
+
+{if $view->getOtherRegionItems()}
+	<section class="section weatherWarning__gridContainer">
+		{if $view->hasOwnRegionSection()}
+			<header class="sectionHeader">
+				<h2 class="sectionTitle">{lang}wcf.weatherWarning.otherRegions{/lang}</h2>
+			</header>
 		{/if}
 
-		{assign var='__isNewRegion' value=true}
-		{assign var='__currentRegionName' value=$warning->getRegionName()}
-	{/if}
-
-	{if $__shouldCloseRegion}
-			</ol>
-		</section>
-		{assign var='__shouldCloseRegion' value=false}
-	{/if}
-
-
-	{if $__isNewRegion}
-		{assign var='__isNewRegion' value=false}
-
-		<section class="section weatherWarning__region">
-			<header class="sectionHeader">
-				<h2 class="sectionTitle">{$warning->getRegionName()}</h2>
-			</header>
-
-			<ol class="weatherWarning__grid">
-	{/if}
-
+		<ol class="weatherWarning__grid">
+			{foreach from=$view->getOtherRegionItems() item='warning'}
 				<li class="weatherWarning__card">
-					{include file='__weatherWarning'}
+					{include file='__weatherWarning' showLocation=true}
 				</li>
-{/foreach}
+			{/foreach}
+		</ol>
+	</section>
+{/if}

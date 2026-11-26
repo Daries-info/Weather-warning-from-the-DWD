@@ -143,6 +143,20 @@
 	margin-top: 10px;
 }
 
+.weatherWarning__location {
+	align-items: center;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: var(--wcfFontSizeSmall);
+	gap: 4px 6px;
+	margin-top: 10px;
+
+	+ .weatherWarning__period {
+		margin-top: 6px;
+	}
+}
+
 /* Two classes to win against `.listView .info` of the core. */
 .weatherWarning .weatherWarning__instruction {
 	font-size: var(--wcfFontSizeSmall);
@@ -243,7 +257,7 @@
 	}
 }
 
-.weatherWarning__region {
+.weatherWarning__gridContainer {
 	container-type: inline-size;
 }
 
@@ -271,6 +285,13 @@
 	box-shadow: var(--wcfBoxShadowCard);
 	display: flex;
 	padding: 15px;
+
+	&.weatherWarning__card--ownRegion {
+		border-color: var(--wcfButtonPrimaryBackground);
+		box-shadow:
+			0 0 0 1px var(--wcfButtonPrimaryBackground),
+			var(--wcfBoxShadowCard);
+	}
 }
 
 .weatherWarning__card > .weatherWarning {
