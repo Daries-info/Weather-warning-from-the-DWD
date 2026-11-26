@@ -317,26 +317,28 @@
 	justify-items: center;
 
 	.germanyMapInfo {
+		justify-self: stretch;
+
 		.legendBoxContainer {
-			padding: 5px;
+			display: grid;
+			font-size: var(--wcfFontSizeSmall);
+			gap: 4px 12px;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			margin-top: 10px;
 
 			> div {
-				display: flex;
 				align-items: center;
-				padding: 5px;
-
-				&:not(:last-child) {
-					margin-bottom: 3px;
-				}
+				display: flex;
+				gap: 6px;
 			}
 
 			.legendBox {
-				flex: 0 0 15px;
-				width: 15px;
-				height: 15px;
-				border: 1px solid var(--wcfContentBorder);
 				background-color: var(--weatherWarningLegendColor);
-				margin-right: 10px;
+				border: 1px solid var(--wcfContentBorder);
+				border-radius: 2px;
+				flex: 0 0 12px;
+				height: 12px;
+				width: 12px;
 			}
 
 			.preliminary {
@@ -365,11 +367,6 @@
 			}
 		}
 	}
-}
-
-.weatherWarningMapButton {
-	margin-top: 10px;
-	text-align: center;
 }
 
 .weatherWarningFooter {

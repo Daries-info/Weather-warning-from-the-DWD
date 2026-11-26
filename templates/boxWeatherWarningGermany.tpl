@@ -6,58 +6,41 @@
 		{if $viewMapInfo}
 			<div class="germanyMapInfo">
 				<div class="legendBoxContainer">
-					<div>
-						<div class="legendBox warningLegend1"
-							style="--weatherWarningLegendColor: rgba(136, 14, 79, 1)">
-						</div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend1{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend4{/lang}">
+						<span class="legendBox" style="--weatherWarningLegendColor: rgba(255, 235, 59, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend4.short{/lang}</span>
 					</div>
-					<div>
-						<div class="legendBox warningLegend2"
-							style="--weatherWarningLegendColor: rgba(229, 57, 53, 1)">
-						</div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend2{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend3{/lang}">
+						<span class="legendBox" style="--weatherWarningLegendColor: rgba(255, 146, 0, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend3.short{/lang}</span>
 					</div>
-					<div>
-						<div class="legendBox warningLegend3"
-							style="--weatherWarningLegendColor: rgba(255, 146, 0, 1)">
-						</div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend3{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend2{/lang}">
+						<span class="legendBox" style="--weatherWarningLegendColor: rgba(229, 57, 53, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend2.short{/lang}</span>
 					</div>
-					<div>
-						<div class="legendBox warningLegend4"
-							style="--weatherWarningLegendColor: rgba(255, 235, 59, 1)">
-						</div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend4{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend1{/lang}">
+						<span class="legendBox" style="--weatherWarningLegendColor: rgba(136, 14, 79, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend1.short{/lang}</span>
 					</div>
-					<div>
-						<div class="legendBox preliminary warningLegend5"
-							style="--weatherWarningLegendColor: rgba(255, 255, 255, 1)"></div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend5{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend5{/lang}">
+						<span class="legendBox preliminary" style="--weatherWarningLegendColor: rgba(255, 255, 255, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend5.short{/lang}</span>
 					</div>
-					<div>
-						<div class="legendBox warningLegend6"
-							style="--weatherWarningLegendColor: rgba(158, 70, 248, 1)">
-						</div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend6{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend6{/lang}">
+						<span class="legendBox" style="--weatherWarningLegendColor: rgba(158, 70, 248, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend6.short{/lang}</span>
 					</div>
-					<div>
-						<div class="legendBox warningLegend7"
-							style="--weatherWarningLegendColor: rgba(204, 153, 255, 1)">
-						</div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend7{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend7{/lang}">
+						<span class="legendBox" style="--weatherWarningLegendColor: rgba(204, 153, 255, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend7.short{/lang}</span>
 					</div>
-					<div>
-						<div class="legendBox warningLegend8"
-							style="--weatherWarningLegendColor: rgba(254, 104, 254, 1)">
-						</div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend8{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend8{/lang}">
+						<span class="legendBox" style="--weatherWarningLegendColor: rgba(254, 104, 254, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend8.short{/lang}</span>
 					</div>
-					<div>
-						<div class="legendBox warningLegend9"
-							style="--weatherWarningLegendColor: rgba(197, 229, 102, 1)">
-						</div>
-						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend9{/lang}</div>
+					<div title="{lang}wcf.weatherWarning.dwd.legend9{/lang}">
+						<span class="legendBox" style="--weatherWarningLegendColor: rgba(197, 229, 102, 1)"></span>
+						<span class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend9.short{/lang}</span>
 					</div>
 				</div>
 			</div>
@@ -65,10 +48,6 @@
 	</div>
 </div>
 
-<div class="weatherWarningMapButton">
-	<a href="https://www.dwd.de/DE/wetter/warnungen_gemeinden/warnWetter_node.htm" class="button"
-		{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" {/if}>
-		{icon name='info' size=24}
-		<span>{lang}wcf.weatherWarning.more.information{/lang}</span>
-	</a>
+<div class="weatherWarningFooter">
+	<a href="https://www.dwd.de/DE/wetter/warnungen_gemeinden/warnWetter_node.htm" class="externalURL" rel="nofollow noopener"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.weatherWarning.more.information{/lang}</a>
 </div>
