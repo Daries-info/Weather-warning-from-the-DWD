@@ -1,15 +1,14 @@
 <?php
 
 use wcf\data\option\OptionEditor;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
  * Replaces the region list with the warn areas the DWD actually issues warnings for.
  *
  * The previous list also contained municipalities, districts of cities, lakes and sea areas, which never
- * receive a warning. Stored regions are moved to their new name where this is unambiguous and cleared
- * otherwise, so the default region applies again.
+ * receive a warning. Stored regions are moved to the warn area they belong to where this is unambiguous
+ * and cleared otherwise, so the default region applies again.
  *
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
@@ -92,6 +91,21 @@ $renamedRegions = [
     'Stadt Augsburg' => 'Kreis und Stadt Augsburg',
 ];
 
+/** @var array<string, int> $municipalityRegions */
+$municipalityRegions = require __DIR__ . '/regionMigration_dev.daries.weatherWarning_2.0.2.php';
+
+$resolveRegion = static function (string $region) use ($regions, $renamedRegions, $municipalityRegions): string {
+    if (\in_array($region, $regions, true)) {
+        return $region;
+    }
+
+    if (isset($renamedRegions[$region])) {
+        return $renamedRegions[$region];
+    }
+
+    return $regions[$municipalityRegions[$region] ?? 0] ?? '';
+};
+
 WCF::getDB()->beginTransaction();
 
 $sql = "DELETE FROM wcf1_weather_warning_region";
@@ -116,30 +130,30 @@ $optionID = $statement->fetchSingleColumn();
 if ($optionID !== false) {
     $column = 'userOption' . $optionID;
 
+    $sql = "SELECT DISTINCT {$column}
+            FROM            wcf1_user_option_value
+            WHERE           {$column} <> ?";
+    $statement = WCF::getDB()->prepare($sql);
+    $statement->execute(['']);
+    $storedRegions = $statement->fetchList($column);
+
     $sql = "UPDATE wcf1_user_option_value
             SET    {$column} = ?
             WHERE  {$column} = ?";
     $statement = WCF::getDB()->prepare($sql);
-    foreach ($renamedRegions as $oldName => $newName) {
-        $statement->execute([$newName, $oldName]);
+    foreach ($storedRegions as $storedRegion) {
+        $newRegion = $resolveRegion($storedRegion);
+        if ($newRegion !== $storedRegion) {
+            $statement->execute([$newRegion, $storedRegion]);
+        }
     }
-
-    $conditions = new PreparedStatementConditionBuilder();
-    $conditions->add("{$column} <> ?", ['']);
-    $conditions->add("{$column} NOT IN (?)", [\array_values($regions)]);
-
-    $sql = "UPDATE wcf1_user_option_value
-            SET    {$column} = ?
-            " . $conditions;
-    $statement = WCF::getDB()->prepare($sql);
-    $statement->execute(\array_merge([''], $conditions->getParameters()));
 }
 
 WCF::getDB()->commitTransaction();
 
 $defaultRegion = WEATHER_WARNING_DEFAULT_REGION;
 if ($defaultRegion !== '') {
-    $newDefaultRegion = $renamedRegions[$defaultRegion] ?? (\in_array($defaultRegion, $regions, true) ? $defaultRegion : '');
+    $newDefaultRegion = $resolveRegion($defaultRegion);
 
     if ($newDefaultRegion !== $defaultRegion) {
         OptionEditor::import(['weather_warning_default_region' => $newDefaultRegion]);
