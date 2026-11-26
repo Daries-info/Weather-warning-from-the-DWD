@@ -12,6 +12,8 @@ use wcf\data\weather\warning\WeatherWarning;
 use wcf\system\cache\tolerant\data\WeatherWarningCacheData;
 use wcf\system\io\HttpFactory;
 
+use function wcf\functions\exception\logThrowable;
+
 /**
  * Tolerant cache implementation for DWD weather warnings, warning maps and fire indices.
  *
@@ -78,9 +80,10 @@ final class WeatherWarningCache extends AbstractTolerantCache
     /**
      * Fetches all warnings, maps and fire indices from the DWD.
      *
-     * All resources are requested concurrently. If any single resource cannot be loaded,
-     * the whole rebuild is aborted and the previously cached (now merely stale) data
-     * continues to be served, instead of overwriting good data with a partial or empty result.
+     * All resources are requested concurrently. If the warnings cannot be loaded, the whole rebuild
+     * is aborted and the previously cached (now merely stale) data continues to be served, instead
+     * of overwriting good data with an empty result. Maps and fire indices that cannot be loaded
+     * are left empty, so that the boxes showing them are hidden until the next rebuild.
      */
     #[\Override]
     protected function rebuildCacheData(): WeatherWarningCacheData
@@ -118,7 +121,8 @@ final class WeatherWarningCache extends AbstractTolerantCache
     /**
      * Requests an image from the given URL, resolving to a base64-encoded data URI.
      *
-     * The returned promise is rejected with a `\RuntimeException` if the image could not be loaded.
+     * If the image cannot be loaded, the failure is logged and the promise resolves to an empty string,
+     * so that a single missing image does not prevent the warnings from being updated.
      */
     private function requestImage(string $url): PromiseInterface
     {
@@ -132,12 +136,15 @@ final class WeatherWarningCache extends AbstractTolerantCache
                 }
 
                 return \sprintf('data:image/png;base64,%s', \base64_encode($dataString));
-            },
-            static function (mixed $reason) use ($url): never {
-                throw new \RuntimeException(
+            }
+        )->otherwise(
+            static function (mixed $reason) use ($url): string {
+                logThrowable(new \RuntimeException(
                     \sprintf("Failed to load weather warning image from '%s'.", $url),
                     previous: $reason instanceof \Throwable ? $reason : null
-                );
+                ));
+
+                return '';
             }
         );
     }
