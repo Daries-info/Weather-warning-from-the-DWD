@@ -3,6 +3,7 @@
 namespace wcf\system\weather\warning;
 
 use wcf\data\weather\warning\WeatherWarning;
+use wcf\system\cache\CacheHandler;
 use wcf\system\cache\tolerant\data\WeatherWarningCacheData;
 use wcf\system\cache\tolerant\WeatherWarningCache;
 use wcf\system\SingletonFactory;
@@ -18,6 +19,12 @@ use function wcf\functions\exception\logThrowable;
  */
 final class WeatherWarningHandler extends SingletonFactory
 {
+    /**
+     * Marks a failed rebuild of the empty weather warning cache. Only its existence matters,
+     * the cache source drops it after the lifetime of the weather warning cache.
+     */
+    private const string REBUILD_FAILED_CACHE_NAME = 'weatherWarningRebuildFailed';
+
     private WeatherWarningCacheData $cache;
 
     /**
@@ -65,21 +72,38 @@ final class WeatherWarningHandler extends SingletonFactory
     private function getCache(): WeatherWarningCacheData
     {
         if (!isset($this->cache)) {
-            try {
-                $this->cache = (new WeatherWarningCache())->getCache();
-            } catch (\RuntimeException $e) {
-                // Without any cached data, the cache is rebuilt within the current request.
-                // A failure to reach the DWD must not break the page for the visitor.
-                if (ENABLE_DEBUG_MODE) {
-                    throw $e;
-                }
-
-                logThrowable($e);
-
-                $this->cache = new WeatherWarningCacheData([], 0, '', '', []);
-            }
+            $this->cache = $this->loadCache();
         }
 
         return $this->cache;
+    }
+
+    /**
+     * Without any cached data, the cache is rebuilt within the current request. A failure to reach
+     * the DWD must not break the page for the visitor, and it is not retried before the DWD would be
+     * requested again anyway, so that visitors are not delayed by a timeout on every page.
+     */
+    private function loadCache(): WeatherWarningCacheData
+    {
+        $weatherWarningCache = new WeatherWarningCache();
+        $cacheSource = CacheHandler::getInstance()->getCacheSource();
+
+        if ($cacheSource->get(self::REBUILD_FAILED_CACHE_NAME, $weatherWarningCache->getLifetime()) !== null) {
+            return new WeatherWarningCacheData([], 0, '', '', []);
+        }
+
+        try {
+            return $weatherWarningCache->getCache();
+        } catch (\RuntimeException $e) {
+            if (ENABLE_DEBUG_MODE) {
+                throw $e;
+            }
+
+            logThrowable($e);
+
+            $cacheSource->set(self::REBUILD_FAILED_CACHE_NAME, true, $weatherWarningCache->getLifetime());
+
+            return new WeatherWarningCacheData([], 0, '', '', []);
+        }
     }
 }
