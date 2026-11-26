@@ -88,7 +88,7 @@ final class UserWeatherWarningHandler extends SingletonFactory
     /**
      * Returns true if the region is not taken from the profile of the user, but set by the administrator.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function isDefaultRegion(): bool
     {

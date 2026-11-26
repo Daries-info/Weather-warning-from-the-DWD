@@ -63,7 +63,7 @@ final class WeatherWarningCache extends AbstractTolerantCache
     /**
      * Directory relative to `WCF_DIR` that holds the downloaded maps and fire indices.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public const string IMAGE_DIRECTORY = '_data/public/weatherWarning/';
 

@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
- * @since 2.0.2
+ * @since 2.1
  */
 
 /** @var array<int, string> $regions */
@@ -92,7 +92,7 @@ $renamedRegions = [
 ];
 
 /** @var array<string, int> $municipalityRegions */
-$municipalityRegions = require __DIR__ . '/regionMigration_dev.daries.weatherWarning_2.0.2.php';
+$municipalityRegions = require __DIR__ . '/regionMigration_dev.daries.weatherWarning_2.1.0.php';
 
 $resolveRegion = static function (string $region) use ($regions, $renamedRegions, $municipalityRegions): string {
     if (\in_array($region, $regions, true)) {

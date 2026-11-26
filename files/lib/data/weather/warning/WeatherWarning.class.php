@@ -110,7 +110,7 @@ final class WeatherWarning extends DatabaseObject
     /**
      * Returns the URL of the icon for the type and warning level.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function getIconUrl(): string
     {
@@ -125,7 +125,7 @@ final class WeatherWarning extends DatabaseObject
     /**
      * Returns true if the warning has an end that has already passed.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function isExpired(): bool
     {
@@ -145,7 +145,7 @@ final class WeatherWarning extends DatabaseObject
      * The `level` of `warnings.json` is the warning level plus one, except for heat and UV warnings,
      * which use levels of their own.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function getWarnLevel(): int
     {
@@ -159,7 +159,7 @@ final class WeatherWarning extends DatabaseObject
     /**
      * Returns the highest warning level the DWD uses for the type of this warning.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function getMaxWarnLevel(): int
     {
@@ -173,7 +173,7 @@ final class WeatherWarning extends DatabaseObject
     /**
      * Returns the warning level, where a preliminary information counts as the warning it announces.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function getSeverityLevel(): int
     {
@@ -183,7 +183,7 @@ final class WeatherWarning extends DatabaseObject
     /**
      * Returns true if this is a preliminary information that announces a severe weather warning.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function isPreliminary(): bool
     {

@@ -241,7 +241,7 @@ class WeatherWarningListView extends AbstractListView
     /**
      * Returns the region of the user or the default region, if the user has not set one.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function getOwnRegion(): string
     {
@@ -252,7 +252,7 @@ class WeatherWarningListView extends AbstractListView
      * Returns the weather warnings of the current page that belong to the own region.
      *
      * @return array<int, WeatherWarning>
-     * @since 2.0.2
+     * @since 2.1
      */
     public function getOwnRegionItems(): array
     {
@@ -263,7 +263,7 @@ class WeatherWarningListView extends AbstractListView
      * Returns the weather warnings of the current page that do not belong to the own region.
      *
      * @return array<int, WeatherWarning>
-     * @since 2.0.2
+     * @since 2.1
      */
     public function getOtherRegionItems(): array
     {
@@ -274,7 +274,7 @@ class WeatherWarningListView extends AbstractListView
      * Returns true if the own region is shown in a section of its own. Without warnings for the own region,
      * the section is only shown on the first page without filters, to point out that there are no warnings.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function hasOwnRegionSection(): bool
     {
@@ -292,7 +292,7 @@ class WeatherWarningListView extends AbstractListView
     /**
      * Returns true if the user is shown the default region, but could set a region in the profile.
      *
-     * @since 2.0.2
+     * @since 2.1
      */
     public function canSetOwnRegion(): bool
     {
