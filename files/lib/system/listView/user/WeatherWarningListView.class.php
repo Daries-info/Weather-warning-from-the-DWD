@@ -228,24 +228,7 @@ class WeatherWarningListView extends AbstractListView
 
         $objects = $this->loadDataSource();
         $this->objectCount = \count($objects);
-        \uasort($objects, function (WeatherWarning $a, WeatherWarning $b) {
-            // The warnings of the own region always come first.
-            $ownRegionComparison = $this->isOwnRegion($b) <=> $this->isOwnRegion($a);
-            if ($ownRegionComparison !== 0) {
-                return $ownRegionComparison;
-            }
-
-            $order = $this->getSortOrder() === 'ASC' ? 1 : -1;
-
-            // Sort by regionName first
-            $regionComparison = \strcmp($a->getRegionName(), $b->getRegionName());
-            if ($regionComparison !== 0) {
-                return $regionComparison * $order;
-            }
-
-            // If regionName is the same, sort by start
-            return ($a->getStart() <=> $b->getStart()) * $order;
-        });
+        \uasort($objects, $this->compareWarnings(...));
         $this->objects = \array_slice($objects, ($this->getPageNo() - 1) * $this->getItemsPerPage(), $this->getItemsPerPage());
     }
 
@@ -315,6 +298,29 @@ class WeatherWarningListView extends AbstractListView
     private function isOwnRegion(WeatherWarning $warning): bool
     {
         return $warning->getRegionName() === $this->getOwnRegion();
+    }
+
+    /**
+     * Compares two weather warnings by the selected sort field, the warnings of the own region always come first.
+     */
+    private function compareWarnings(WeatherWarning $a, WeatherWarning $b): int
+    {
+        $ownRegionComparison = $this->isOwnRegion($b) <=> $this->isOwnRegion($a);
+        if ($ownRegionComparison !== 0) {
+            return $ownRegionComparison;
+        }
+
+        $comparison = match ($this->getSortField()) {
+            default => $this->compareByRegion($a, $b),
+        };
+
+        return $this->getSortOrder() === 'ASC' ? $comparison : -$comparison;
+    }
+
+    private function compareByRegion(WeatherWarning $a, WeatherWarning $b): int
+    {
+        return \strcmp($a->getRegionName(), $b->getRegionName())
+            ?: $a->getStart() <=> $b->getStart();
     }
 
     #[\Override]
