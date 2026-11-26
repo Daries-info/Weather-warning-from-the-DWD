@@ -70,6 +70,7 @@
 			<item name="wcf.weatherWarning.noData"><![CDATA[Aktuell sind noch keine Wetterwarnungsdaten vorhanden. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es in Kürze erneut.]]></item>
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Offen]]></item>
 			<item name="wcf.weatherWarning.notice"><![CDATA[Für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) liegt eine Wetterwarnung vom DWD vor!]]></item>
+			<item name="wcf.weatherWarning.onlyActive"><![CDATA[Nur aktuell gültige Warnungen]]></item>
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
 			<item name="wcf.weatherWarning.start"><![CDATA[Beginn]]></item>
 			<item name="wcf.weatherWarning.state"><![CDATA[Bundesland]]></item>

@@ -9,6 +9,7 @@ use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\listView\AbstractListView;
 use wcf\system\listView\ListViewSortField;
+use wcf\system\view\filter\BooleanFilter;
 use wcf\system\view\filter\MultipleSelectFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
@@ -71,6 +72,7 @@ class WeatherWarningListView extends AbstractListView
                 3 => 'wcf.weatherWarning.minLevel.3',
                 4 => 'wcf.weatherWarning.minLevel.4',
             ], 'minLevel', 'wcf.weatherWarning.minLevel'),
+            new BooleanFilter('onlyActive', 'wcf.weatherWarning.onlyActive'),
         ]);
 
         $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
@@ -186,6 +188,10 @@ class WeatherWarningListView extends AbstractListView
         if (($activeFilters['minLevel'] ?? '') !== '') {
             $minLevel = (int)$activeFilters['minLevel'];
             $conditions[] = static fn(WeatherWarning $warning): bool => $warning->getSeverityLevel() >= $minLevel;
+        }
+
+        if (isset($activeFilters['onlyActive'])) {
+            $conditions[] = static fn(WeatherWarning $warning): bool => $warning->getStart() <= TIME_NOW;
         }
 
         return $conditions;

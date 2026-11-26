@@ -70,6 +70,7 @@
 			<item name="wcf.weatherWarning.noData"><![CDATA[There is currently no weather warning data available yet. Please check back shortly.]]></item>
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Open]]></item>
 			<item name="wcf.weatherWarning.notice"><![CDATA[For your region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) there is a weather warning from the DWD!]]></item>
+			<item name="wcf.weatherWarning.onlyActive"><![CDATA[Only currently valid warnings]]></item>
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
 			<item name="wcf.weatherWarning.start"><![CDATA[Start]]></item>
 			<item name="wcf.weatherWarning.state"><![CDATA[Federal state]]></item>
