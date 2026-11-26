@@ -209,8 +209,16 @@ final class WeatherWarningCache extends AbstractTolerantCache
         }
 
         $tempID = 0;
+        $knownWarnings = [];
         foreach ($weatherWarning as $infos) {
             foreach ($infos as $info) {
+                // Combined areas ("Kreis und Stadt …") are delivered under two warn cells with identical warnings.
+                $fingerprint = \md5(\serialize($info));
+                if (isset($knownWarnings[$fingerprint])) {
+                    continue;
+                }
+                $knownWarnings[$fingerprint] = true;
+
                 $info['warningID'] = \sprintf('temp-%s-%d', $sourcePrefix, $tempID++);
 
                 $weatherWarningObject = WeatherWarning::createWarning($info);
