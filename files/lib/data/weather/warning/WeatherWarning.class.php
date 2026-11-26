@@ -161,6 +161,20 @@ final class WeatherWarning extends DatabaseObject
         };
     }
 
+    /**
+     * Returns the highest warning level the DWD uses for the type of this warning.
+     *
+     * @since 2.0.2
+     */
+    public function getMaxWarnLevel(): int
+    {
+        return match ($this->getType()) {
+            self::TYPE_HEAT => 2,
+            self::TYPE_UV => 1,
+            default => 4,
+        };
+    }
+
     public function getRegionName(): string
     {
         return $this->regionName;

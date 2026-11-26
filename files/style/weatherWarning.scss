@@ -14,74 +14,139 @@
 			padding-top: 10px;
 		}
 	}
+}
 
-	> dl,
-	> .description,
-	> .instruction {
-		margin-top: 5px;
+/* Colors of the DWD warning levels, matching the legend of the warning map. */
+.weatherWarning {
+	--weatherWarningLevelColor: rgba(229, 57, 53, 1);
+
+	padding-left: 14px;
+	position: relative;
+
+	&::before {
+		background-color: var(--weatherWarningLevelColor);
+		border-radius: 2px;
+		bottom: 0;
+		content: "";
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 4px;
 	}
 
-	.headline {
-		display: flex;
-		align-items: center;
-		font-weight: 600;
-		border-bottom: 1px dotted var(--wcfContentBorder);
-		padding-bottom: 5px;
+	/* A preliminary information announces a severe weather warning. */
+	&.weatherWarning--level0::before {
+		background: repeating-linear-gradient(
+			-45deg,
+			var(--weatherWarningLevelColor) 0 4px,
+			transparent 4px 8px
+		);
+	}
 
-		> img {
-			flex: 0 0 50px;
-			min-width: 50px;
-			height: 50px;
-		}
+	&.weatherWarning--level1 {
+		--weatherWarningLevelColor: rgba(255, 235, 59, 1);
+	}
 
-		> span {
-			flex: 1 1 auto;
-			margin-left: 10px;
+	&.weatherWarning--level2 {
+		--weatherWarningLevelColor: rgba(255, 146, 0, 1);
+	}
+
+	&.weatherWarning--level3 {
+		--weatherWarningLevelColor: rgba(229, 57, 53, 1);
+	}
+
+	&.weatherWarning--level4 {
+		--weatherWarningLevelColor: rgba(136, 14, 79, 1);
+	}
+
+	/* Heat warnings */
+	&.weatherWarning--type8 {
+		--weatherWarningLevelColor: rgba(204, 153, 255, 1);
+
+		&.weatherWarning--level2 {
+			--weatherWarningLevelColor: rgba(158, 70, 248, 1);
 		}
 	}
 
-	.warnLevel {
-		position: relative;
-		margin-top: 10px;
+	/* UV warnings */
+	&.weatherWarning--type9 {
+		--weatherWarningLevelColor: rgba(254, 104, 254, 1);
+	}
+}
 
-		.warnColor {
-			display: inline-table;
-			height: 20px;
-			width: 100%;
-			background: linear-gradient(
-				to right,
-				rgba(255, 235, 59, 1),
-				rgba(255, 146, 0, 1),
-				rgba(229, 57, 53, 1),
-				rgba(136, 14, 79, 1)
-			);
-		}
+.weatherWarning__header {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+}
 
-		.levelRules {
-			position: absolute;
-			background-color: black;
-			height: 30px;
-			width: 10px;
-			opacity: 0.7;
-			top: -5px;
+.weatherWarning__icon {
+	flex: 0 0 auto;
+}
 
-			&.level1 {
-				left: -4px;
-			}
+.weatherWarning__title {
+	min-width: 0;
+}
 
-			&.level2 {
-				left: 31.5%;
-			}
+.weatherWarning__headline {
+	font-size: var(--wcfFontSizeDefault);
+	font-weight: 600;
+}
 
-			&.level3 {
-				right: 31.5%;
-			}
+.weatherWarning__level {
+	align-items: center;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	font-size: var(--wcfFontSizeSmall);
+	gap: 8px;
+	margin-top: 4px;
+}
 
-			&.level4 {
-				right: -4px;
-			}
+.weatherWarning__levelBar {
+	display: flex;
+	gap: 3px;
+
+	> span {
+		background-color: var(--wcfContentBorderInner);
+		border-radius: 3px;
+		height: 6px;
+		width: 18px;
+
+		&.active {
+			background-color: var(--weatherWarningLevelColor);
 		}
 	}
+}
+
+.weatherWarning__period {
+	display: grid;
+	font-size: var(--wcfFontSizeSmall);
+	gap: 2px 8px;
+	grid-template-columns: max-content 1fr;
+	margin-top: 10px;
+
+	> div {
+		display: contents;
+	}
+
+	dt {
+		color: var(--wcfContentDimmedText);
+	}
+
+	dd {
+		margin: 0;
+	}
+}
+
+.weatherWarning__description {
+	font-size: var(--wcfFontSizeSmall);
+	margin-top: 10px;
+}
+
+/* Two classes to win against `.listView .info` of the core. */
+.weatherWarning .weatherWarning__instruction {
+	font-size: var(--wcfFontSizeSmall);
+	margin-top: 15px;
 }
 
 .weatherWarningRegionBox {

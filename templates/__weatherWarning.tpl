@@ -1,35 +1,45 @@
-<div class="headline">
-	<img src="{$warning->getIconUrl()}" alt="{$warning->getHeadline()}" loading="lazy">
-	<span>{$warning->getHeadline()}</span>
-</div>
+<article class="weatherWarning weatherWarning--type{$warning->getType()} weatherWarning--level{$warning->getWarnLevel()}">
+	<header class="weatherWarning__header">
+		<img src="{$warning->getIconUrl()}" class="weatherWarning__icon" width="50" height="50" alt="" loading="lazy">
+		<div class="weatherWarning__title">
+			<h3 class="weatherWarning__headline">{$warning->getHeadline()}</h3>
+			{if $warning->getWarnLevel() && $warning->getMaxWarnLevel() > 1}
+				<div class="weatherWarning__level">
+					<span class="weatherWarning__levelBar" aria-hidden="true">
+						{section name=segment loop=$warning->getMaxWarnLevel()}
+							<span{if $segment < $warning->getWarnLevel()} class="active"{/if}></span>
+						{/section}
+					</span>
+					<span>{lang}wcf.weatherWarning.level{/lang}</span>
+				</div>
+			{/if}
+		</div>
+	</header>
 
-{if $warning->getWarnLevel()}
-	<div class="warnLevel">
-		<div class="warnColor"></div>
-		<div class="levelRules level{$warning->getWarnLevel()}"></div>
+	<dl class="plain weatherWarning__period">
+		<div>
+			<dt>{lang}wcf.weatherWarning.start{/lang}</dt>
+			<dd>{time time=$warning->getStart() type='plainTime'}</dd>
+		</div>
+		<div>
+			<dt>{lang}wcf.weatherWarning.end{/lang}</dt>
+			<dd>
+				{if $warning->getEnd()}
+					{time time=$warning->getEnd() type='plainTime'}
+				{else}
+					{lang}wcf.weatherWarning.noEnd{/lang}
+				{/if}
+			</dd>
+		</div>
+	</dl>
+
+	<div class="weatherWarning__description">
+		{$warning->getDescription()}
 	</div>
-{/if}
 
-<dl class="plain dataList containerContent">
-	<dt><label>{lang}wcf.weatherWarning.start{/lang}</label></dt>
-	<dd>{time time=$warning->getStart() type='plainTime'}</dd>
-
-	<dt><label>{lang}wcf.weatherWarning.end{/lang}</label></dt>
-	<dd>
-		{if $warning->getEnd()}
-			{time time=$warning->getEnd() type='plainTime'}
-		{else}
-			{lang}wcf.weatherWarning.noEnd{/lang}
-		{/if}
-	</dd>
-</dl>
-
-<div class="description small">
-	{$warning->getDescription()}
-</div>
-
-{if !$warning->getInstruction()|empty}
-	<div class="instruction small">
-		{$warning->getInstruction()}
-	</div>
-{/if}
+	{if !$warning->getInstruction()|empty}
+		<div class="info weatherWarning__instruction">
+			{$warning->getInstruction()}
+		</div>
+	{/if}
+</article>
