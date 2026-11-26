@@ -5,6 +5,7 @@ namespace wcf\data\weather\warning\region;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 
 /**
  * Executes region related actions.
@@ -39,7 +40,7 @@ class WeatherWarningRegionAction extends AbstractDatabaseObjectAction implements
         $list = [];
 
         $regionList = new WeatherWarningRegionList();
-        $regionList->getConditionBuilder()->add("regionName LIKE ?", ['%' . $searchString . '%']);
+        $regionList->getConditionBuilder()->add("regionName LIKE ?", ['%' . WCF::getDB()->escapeLikeValue($searchString) . '%']);
         if ($excludedSearchValues !== []) {
             $regionList->getConditionBuilder()->add("regionName NOT IN (?)", [$excludedSearchValues]);
         }
