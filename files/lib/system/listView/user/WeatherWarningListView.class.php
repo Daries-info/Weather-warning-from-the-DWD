@@ -300,6 +300,18 @@ class WeatherWarningListView extends AbstractListView
         return $this->getPageNo() === 1 && $this->getActiveFilters() === [];
     }
 
+    /**
+     * Returns true if the user is shown the default region, but could set a region in the profile.
+     *
+     * @since 2.0.2
+     */
+    public function canSetOwnRegion(): bool
+    {
+        return WCF::getUser()->userID !== 0
+            && UserWeatherWarningHandler::getInstance()->isDefaultRegion()
+            && WCF::getUserProfileHandler()->canEditOwnProfile();
+    }
+
     private function isOwnRegion(WeatherWarning $warning): bool
     {
         return $warning->getRegionName() === $this->getOwnRegion();

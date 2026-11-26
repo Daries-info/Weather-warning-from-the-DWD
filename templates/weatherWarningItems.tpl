@@ -11,6 +11,9 @@
 				{/if}
 				· {$region}
 			</h2>
+			{if $view->canSetOwnRegion()}
+				<p class="sectionDescription">{lang}wcf.weatherWarning.setOwnRegion{/lang}</p>
+			{/if}
 		</header>
 
 		{if $view->getOwnRegionItems()}
