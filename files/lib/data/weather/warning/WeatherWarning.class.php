@@ -63,13 +63,13 @@ final class WeatherWarning extends DatabaseObject
                 'altitudeEnd' => $warning['altitudeEnd'],
                 'altitudeStart' => $warning['altitudeStart'],
                 'description' => $warning['description'],
-                'end' => ($warning['end'] / 1000),
+                'end' => $warning['end'] !== null ? \intdiv((int)$warning['end'], 1000) : null,
                 'event' => $warning['event'],
                 'headline' => $warning['headline'],
                 'instruction' => $warning['instruction'],
                 'level' => $warning['level'],
                 'regionName' => $warning['regionName'],
-                'start' => ($warning['start'] / 1000),
+                'start' => \intdiv((int)$warning['start'], 1000),
                 'state' => $warning['state'],
                 'stateShort' => $warning['stateShort'],
                 'warningID' => $warning['warningID'],
@@ -127,6 +127,18 @@ final class WeatherWarning extends DatabaseObject
     public function getInstruction(): string
     {
         return $this->instruction;
+    }
+
+    /**
+     * Returns true if the warning has an end that has already passed.
+     *
+     * @since 2.0.2
+     */
+    public function isExpired(): bool
+    {
+        $end = $this->getEnd();
+
+        return $end !== null && $end < TIME_NOW;
     }
 
     public function getLevel(): int

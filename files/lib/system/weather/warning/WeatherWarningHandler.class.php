@@ -28,6 +28,11 @@ final class WeatherWarningHandler extends SingletonFactory
     private WeatherWarningCacheData $cache;
 
     /**
+     * @var array<string, WeatherWarning[]>
+     */
+    private array $activeWarnings;
+
+    /**
      * Returns the forest fire hazard index.
      */
     public function getForestFireHazardIndexWBI(): string
@@ -52,13 +57,28 @@ final class WeatherWarningHandler extends SingletonFactory
     }
 
     /**
-     * Returns the weather warnings.
+     * Returns the weather warnings that have not expired yet.
      *
      * @return array<string, WeatherWarning[]>
      */
     public function getWeatherWarning(): array
     {
-        return $this->getCache()->warnings;
+        if (!isset($this->activeWarnings)) {
+            $this->activeWarnings = [];
+
+            foreach ($this->getCache()->warnings as $regionName => $warnings) {
+                $warnings = \array_values(\array_filter(
+                    $warnings,
+                    static fn(WeatherWarning $warning): bool => !$warning->isExpired()
+                ));
+
+                if ($warnings !== []) {
+                    $this->activeWarnings[$regionName] = $warnings;
+                }
+            }
+        }
+
+        return $this->activeWarnings;
     }
 
     /**

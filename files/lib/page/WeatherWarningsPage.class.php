@@ -26,7 +26,7 @@ class WeatherWarningsPage extends AbstractListViewPage
 
         WCF::getTPL()->assign([
             'warningTime' => WeatherWarningHandler::getInstance()->getWeatherWarningTime(),
-            'hasWeatherWarningData' => WeatherWarningHandler::getInstance()->getWeatherWarning() !== [],
+            'hasWeatherWarningData' => WeatherWarningHandler::getInstance()->getWeatherWarningTime() !== 0,
         ]);
     }
 
