@@ -163,6 +163,131 @@
 	margin-top: 15px;
 }
 
+/* Stacks the warnings of the region box, so that the box keeps the height of the longest one. */
+.weatherWarningSlider {
+	--weatherWarningSliderInterval: 8s;
+	--weatherWarningSliderDuration: 0.45s;
+
+	.weatherWarningContent {
+		display: grid;
+		overflow: hidden;
+
+		> .weatherWarningRegion.warningBox {
+			border-top: 0;
+			grid-area: 1 / 1;
+			margin-top: 0;
+			padding-top: 0;
+			transition:
+				opacity var(--weatherWarningSliderDuration) ease,
+				transform var(--weatherWarningSliderDuration) cubic-bezier(0.22, 0.61, 0.36, 1),
+				visibility var(--weatherWarningSliderDuration);
+
+			&:not(.active) {
+				opacity: 0;
+				visibility: hidden;
+			}
+
+			&[data-slide-position="before"] {
+				transform: translateX(-24px);
+			}
+
+			&[data-slide-position="after"] {
+				transform: translateX(24px);
+			}
+
+			&.weatherWarningSlider__slide--instant {
+				transition: none;
+			}
+		}
+	}
+}
+
+.weatherWarningSlider__nav {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.weatherWarningSlider__button {
+	background: none;
+	border: 0;
+	color: var(--wcfContentDimmedText);
+	cursor: pointer;
+	display: flex;
+	padding: 4px;
+
+	&:hover,
+	&:focus-visible {
+		color: var(--wcfContentText);
+	}
+}
+
+.weatherWarningSlider__dots {
+	align-items: center;
+	display: flex;
+	gap: 6px;
+}
+
+/* The active dot becomes a bar that fills until the next warning is shown. */
+.weatherWarningSlider__dot {
+	background-color: var(--wcfContentBorderInner);
+	border: 0;
+	border-radius: 4px;
+	cursor: pointer;
+	height: 8px;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	transition: width 0.3s;
+	width: 8px;
+
+	&[aria-current="true"] {
+		width: 24px;
+
+		&::after {
+			animation: weatherWarningSliderProgress var(--weatherWarningSliderInterval) linear forwards;
+			background-color: var(--wcfContentText);
+			content: "";
+			inset: 0;
+			position: absolute;
+			transform-origin: left center;
+		}
+	}
+}
+
+.weatherWarningSlider--paused .weatherWarningSlider__dot::after {
+	animation-play-state: paused;
+}
+
+@keyframes weatherWarningSliderProgress {
+	from {
+		transform: scaleX(0);
+	}
+
+	to {
+		transform: scaleX(1);
+	}
+}
+
+/* Without animations, the warnings change only on request. */
+@media (prefers-reduced-motion: reduce) {
+	.weatherWarningSlider .weatherWarningContent > .weatherWarningRegion.warningBox,
+	.weatherWarningSlider__dot {
+		transition: none;
+	}
+
+	.weatherWarningSlider__dot[aria-current="true"]::after {
+		animation: none;
+	}
+}
+
+.weatherWarningSlider__counter {
+	color: var(--wcfContentDimmedText);
+	font-size: var(--wcfFontSizeSmall);
+}
+
 .weatherWarningRegionBox {
 	.boxTitle {
 		font-size: 16px;

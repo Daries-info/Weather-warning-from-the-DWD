@@ -78,6 +78,10 @@
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
 			<item name="wcf.weatherWarning.setOwnRegion"><![CDATA[Set your own region in your <a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">profile</a> to see the warnings for your region here.]]></item>
 			<item name="wcf.weatherWarning.severity"><![CDATA[Warning level]]></item>
+			<item name="wcf.weatherWarning.slider"><![CDATA[carousel]]></item>
+			<item name="wcf.weatherWarning.slider.next"><![CDATA[Next warning]]></item>
+			<item name="wcf.weatherWarning.slider.previous"><![CDATA[Previous warning]]></item>
+			<item name="wcf.weatherWarning.slider.slide"><![CDATA[Warning {#$slide + 1} of {#$warnings|count}]]></item>
 			<item name="wcf.weatherWarning.start"><![CDATA[Start]]></item>
 			<item name="wcf.weatherWarning.state"><![CDATA[Federal state]]></item>
 			<item name="wcf.weatherWarning.type"><![CDATA[Warning type]]></item>
