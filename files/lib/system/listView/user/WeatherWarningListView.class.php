@@ -55,7 +55,7 @@ class WeatherWarningListView extends AbstractListView
     public function __construct()
     {
         $this->addAvailableFilters([
-            new class($this->getAvailableRegions(), 'region', 'wcf.weatherWarning.region') extends MultipleSelectFilter {
+            new class ($this->getAvailableRegions(), 'region', 'wcf.weatherWarning.region', labelLanguageItems: false) extends MultipleSelectFilter {
                 #[\Override]
                 public function getFormField(): AbstractFormField
                 {
