@@ -40,6 +40,7 @@
 			<item name="wcf.weatherWarning.dwd.legend3"><![CDATA[Warning of significant weather (Level 2)]]></item>
 			<item name="wcf.weatherWarning.dwd.legend4"><![CDATA[Weather warnings (Level 1)]]></item>
 			<item name="wcf.weatherWarning.dwd.legend5"><![CDATA[Preliminary information]]></item>
+			<item name="wcf.weatherWarning.dwd.legend6"><![CDATA[Heat warning (extreme)]]></item>
 			<item name="wcf.weatherWarning.dwd.legend7"><![CDATA[Heat warnings]]></item>
 			<item name="wcf.weatherWarning.dwd.legend8"><![CDATA[Ultraviolet radiation warnings]]></item>
 			<item name="wcf.weatherWarning.dwd.legend9"><![CDATA[No severe weather]]></item>

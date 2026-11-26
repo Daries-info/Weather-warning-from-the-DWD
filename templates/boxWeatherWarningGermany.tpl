@@ -35,14 +35,12 @@
 							style="--weatherWarningLegendColor: rgba(255, 255, 255, 1)"></div>
 						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend5{/lang}</div>
 					</div>
-					{if $__wcf->getLanguage()->getFixedLanguageCode() === "de"}
-						<div>
-							<div class="legendBox warningLegend6"
-								style="--weatherWarningLegendColor: rgba(158, 70, 248, 1)">
-							</div>
-							<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend6{/lang}</div>
+					<div>
+						<div class="legendBox warningLegend6"
+							style="--weatherWarningLegendColor: rgba(158, 70, 248, 1)">
 						</div>
-					{/if}
+						<div class="legendBoxText">{lang}wcf.weatherWarning.dwd.legend6{/lang}</div>
+					</div>
 					<div>
 						<div class="legendBox warningLegend7"
 							style="--weatherWarningLegendColor: rgba(204, 153, 255, 1)">
