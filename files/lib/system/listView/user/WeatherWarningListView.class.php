@@ -45,6 +45,7 @@ class WeatherWarningListView extends AbstractListView
 
         $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
         $this->setDefaultSortField('regionName');
+        $this->setItemsPerPage(50);
     }
 
     #[\Override]
