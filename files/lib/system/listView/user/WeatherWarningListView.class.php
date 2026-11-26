@@ -10,6 +10,7 @@ use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\listView\AbstractListView;
 use wcf\system\listView\ListViewSortField;
 use wcf\system\view\filter\MultipleSelectFilter;
+use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 use wcf\system\weather\warning\WeatherWarningHandler;
 
@@ -65,6 +66,11 @@ class WeatherWarningListView extends AbstractListView
             },
             new MultipleSelectFilter($this->getAvailableStates(), 'state', 'wcf.weatherWarning.state', labelLanguageItems: false),
             new MultipleSelectFilter($this->getAvailableTypes(), 'type', 'wcf.weatherWarning.type', labelLanguageItems: false),
+            new SelectFilter([
+                2 => 'wcf.weatherWarning.minLevel.2',
+                3 => 'wcf.weatherWarning.minLevel.3',
+                4 => 'wcf.weatherWarning.minLevel.4',
+            ], 'minLevel', 'wcf.weatherWarning.minLevel'),
         ]);
 
         $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
@@ -175,6 +181,11 @@ class WeatherWarningListView extends AbstractListView
         if (($activeFilters['type'] ?? '') !== '') {
             $types = \array_map(\intval(...), \explode(',', $activeFilters['type']));
             $conditions[] = static fn(WeatherWarning $warning): bool => \in_array($warning->getType(), $types, true);
+        }
+
+        if (($activeFilters['minLevel'] ?? '') !== '') {
+            $minLevel = (int)$activeFilters['minLevel'];
+            $conditions[] = static fn(WeatherWarning $warning): bool => $warning->getSeverityLevel() >= $minLevel;
         }
 
         return $conditions;

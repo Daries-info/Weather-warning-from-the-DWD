@@ -62,6 +62,10 @@
 			<item name="wcf.weatherWarning.forestFireHazardIndex"><![CDATA[Waldbrand-Gefahrenindex WBI]]></item>
 			<item name="wcf.weatherWarning.grasslandFireIndex"><![CDATA[Grasland - Feuerindex]]></item>
 			<item name="wcf.weatherWarning.level"><![CDATA[Stufe {#$warning->getWarnLevel()} von {#$warning->getMaxWarnLevel()}]]></item>
+			<item name="wcf.weatherWarning.minLevel"><![CDATA[Mindest-Warnstufe]]></item>
+			<item name="wcf.weatherWarning.minLevel.2"><![CDATA[ab Stufe 2 (markantes Wetter)]]></item>
+			<item name="wcf.weatherWarning.minLevel.3"><![CDATA[ab Stufe 3 (Unwetter)]]></item>
+			<item name="wcf.weatherWarning.minLevel.4"><![CDATA[Stufe 4 (extremes Unwetter)]]></item>
 			<item name="wcf.weatherWarning.more.information"><![CDATA[Mehr Informationen]]></item>
 			<item name="wcf.weatherWarning.noData"><![CDATA[Aktuell sind noch keine Wetterwarnungsdaten vorhanden. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es in Kürze erneut.]]></item>
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Offen]]></item>

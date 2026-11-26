@@ -38,7 +38,7 @@ final class WeatherWarning extends DatabaseObject
     /**
      * A preliminary information always announces a severe weather warning.
      */
-    private const int PRELIMINARY_ICON_LEVEL = 3;
+    private const int PRELIMINARY_LEVEL = 3;
 
     /**
      * Creates a new instance of WeatherWarning class.
@@ -114,12 +114,7 @@ final class WeatherWarning extends DatabaseObject
      */
     public function getIconUrl(): string
     {
-        $level = $this->getWarnLevel();
-        if ($level === 0) {
-            $level = self::PRELIMINARY_ICON_LEVEL;
-        }
-
-        return \sprintf('%simages/weather/icon_%d_%d.webp', WCF::getPath(), $this->getType(), $level);
+        return \sprintf('%simages/weather/icon_%d_%d.webp', WCF::getPath(), $this->getType(), $this->getSeverityLevel());
     }
 
     public function getInstruction(): string
@@ -173,6 +168,18 @@ final class WeatherWarning extends DatabaseObject
             self::TYPE_UV => 1,
             default => 4,
         };
+    }
+
+    /**
+     * Returns the warning level, where a preliminary information counts as the warning it announces.
+     *
+     * @since 2.0.2
+     */
+    public function getSeverityLevel(): int
+    {
+        $level = $this->getWarnLevel();
+
+        return $level === 0 ? self::PRELIMINARY_LEVEL : $level;
     }
 
     public function getRegionName(): string
