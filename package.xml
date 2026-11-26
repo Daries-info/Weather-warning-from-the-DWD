@@ -46,5 +46,7 @@
         <instruction type="file" />
         <instruction type="cronjob" />
         <instruction type="fileDelete" />
+        <instruction type="script">acp/update_dev.daries.weatherWarning_2.0.2.php</instruction>
+        <instruction type="database">acp/database/update_dev.daries.weatherWarning_2.0.2.php</instruction>
     </instructions>
 </package>

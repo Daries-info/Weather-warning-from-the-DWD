@@ -9,6 +9,7 @@
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
+use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 
 return [
@@ -21,5 +22,8 @@ return [
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['regionID']),
+            DatabaseTableIndex::create('regionName')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
+                ->columns(['regionName']),
         ]),
 ];
