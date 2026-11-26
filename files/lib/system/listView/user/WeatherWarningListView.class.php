@@ -27,6 +27,9 @@ class WeatherWarningListView extends AbstractListView
     /** @var array<string, string> */
     private array $availableRegions;
 
+    /** @var array<string, string> */
+    private array $availableStates;
+
     public function __construct()
     {
         $this->addAvailableFilters([
@@ -41,6 +44,7 @@ class WeatherWarningListView extends AbstractListView
                     return $formField;
                 }
             },
+            new MultipleSelectFilter($this->getAvailableStates(), 'state', 'wcf.weatherWarning.state', labelLanguageItems: false),
         ]);
 
         $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
@@ -89,6 +93,44 @@ class WeatherWarningListView extends AbstractListView
         }
 
         return $this->availableRegions;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getAvailableStates(): array
+    {
+        if (!isset($this->availableStates)) {
+            $this->availableStates = [];
+            foreach (WeatherWarningHandler::getInstance()->getWeatherWarning() as $warnings) {
+                foreach ($warnings as $warning) {
+                    $this->availableStates[$warning->getState()] = $warning->getState();
+                }
+            }
+
+            \ksort($this->availableStates);
+        }
+
+        return $this->availableStates;
+    }
+
+    /**
+     * Returns the conditions of the active filters that each weather warning must meet,
+     * the region filter is already applied when the data is loaded.
+     *
+     * @return list<\Closure(WeatherWarning): bool>
+     */
+    private function getFilterConditions(): array
+    {
+        $activeFilters = $this->getActiveFilters();
+        $conditions = [];
+
+        if (($activeFilters['state'] ?? '') !== '') {
+            $states = \explode(',', $activeFilters['state']);
+            $conditions[] = static fn(WeatherWarning $warning): bool => \in_array($warning->getState(), $states, true);
+        }
+
+        return $conditions;
     }
 
     #[\Override]
@@ -146,21 +188,20 @@ class WeatherWarningListView extends AbstractListView
 
         $regionFilterValue = $this->getActiveFilters()['region'] ?? '';
         if ($regionFilterValue !== '') {
-            $regions = \explode(',', $regionFilterValue);
-
-            $list = [];
-            foreach ($regions as $region) {
-                foreach ($weatherWarnings[$region] ?? [] as $warning) {
-                    $list[$warning->getObjectID()] = $warning;
-                }
-            }
-
-            return $list;
+            $weatherWarnings = \array_intersect_key($weatherWarnings, \array_flip(\explode(',', $regionFilterValue)));
         }
+
+        $conditions = $this->getFilterConditions();
 
         $list = [];
         foreach ($weatherWarnings as $warnings) {
             foreach ($warnings as $warning) {
+                foreach ($conditions as $condition) {
+                    if (!$condition($warning)) {
+                        continue 2;
+                    }
+                }
+
                 $list[$warning->getObjectID()] = $warning;
             }
         }

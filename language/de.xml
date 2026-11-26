@@ -68,6 +68,7 @@
 			<item name="wcf.weatherWarning.notice"><![CDATA[Für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) liegt eine Wetterwarnung vom DWD vor!]]></item>
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
 			<item name="wcf.weatherWarning.start"><![CDATA[Beginn]]></item>
+			<item name="wcf.weatherWarning.state"><![CDATA[Bundesland]]></item>
 			<item name="wcf.weatherWarning.warningTime"><![CDATA[Letzte Aktualisierung: {time time=$warningTime}]]></item>
 			<item name="wcf.weatherWarning.viewFullSize"><![CDATA[Großansicht]]></item>
 		</category>
