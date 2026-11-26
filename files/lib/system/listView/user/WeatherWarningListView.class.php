@@ -73,6 +73,7 @@ class WeatherWarningListView extends AbstractListView
                 4 => 'wcf.weatherWarning.minLevel.4',
             ], 'minLevel', 'wcf.weatherWarning.minLevel'),
             new BooleanFilter('onlyActive', 'wcf.weatherWarning.onlyActive'),
+            new BooleanFilter('hidePreliminary', 'wcf.weatherWarning.hidePreliminary'),
         ]);
 
         $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
@@ -192,6 +193,10 @@ class WeatherWarningListView extends AbstractListView
 
         if (isset($activeFilters['onlyActive'])) {
             $conditions[] = static fn(WeatherWarning $warning): bool => $warning->getStart() <= TIME_NOW;
+        }
+
+        if (isset($activeFilters['hidePreliminary'])) {
+            $conditions[] = static fn(WeatherWarning $warning): bool => !$warning->isPreliminary();
         }
 
         return $conditions;

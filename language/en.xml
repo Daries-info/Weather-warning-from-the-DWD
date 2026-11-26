@@ -61,6 +61,7 @@
 			<item name="wcf.weatherWarning.end"><![CDATA[End]]></item>
 			<item name="wcf.weatherWarning.forestFireHazardIndex"><![CDATA[Forest Fire Hazard Index WBI]]></item>
 			<item name="wcf.weatherWarning.grasslandFireIndex"><![CDATA[Grassland - Fire Index]]></item>
+			<item name="wcf.weatherWarning.hidePreliminary"><![CDATA[Hide preliminary information]]></item>
 			<item name="wcf.weatherWarning.level"><![CDATA[Level {#$warning->getWarnLevel()} of {#$warning->getMaxWarnLevel()}]]></item>
 			<item name="wcf.weatherWarning.minLevel"><![CDATA[Minimum warning level]]></item>
 			<item name="wcf.weatherWarning.minLevel.2"><![CDATA[Level 2 and above (significant weather)]]></item>

@@ -177,9 +177,17 @@ final class WeatherWarning extends DatabaseObject
      */
     public function getSeverityLevel(): int
     {
-        $level = $this->getWarnLevel();
+        return $this->isPreliminary() ? self::PRELIMINARY_LEVEL : $this->getWarnLevel();
+    }
 
-        return $level === 0 ? self::PRELIMINARY_LEVEL : $level;
+    /**
+     * Returns true if this is a preliminary information that announces a severe weather warning.
+     *
+     * @since 2.0.2
+     */
+    public function isPreliminary(): bool
+    {
+        return $this->getWarnLevel() === 0;
     }
 
     public function getRegionName(): string
