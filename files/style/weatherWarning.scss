@@ -335,25 +335,13 @@
 				width: 12px;
 			}
 
+			/* Same hatching as the level stripe of a preliminary information. */
 			.preliminary {
-				background-image: linear-gradient(
+				background-image: repeating-linear-gradient(
 					-45deg,
-					rgba(229, 57, 53, 0.2) 12.5%,
-					transparent 12.5%,
-					transparent 25%,
-					rgba(229, 57, 53, 0.2) 25%,
-					rgba(229, 57, 53, 0.2) 37.5%,
-					transparent 37.5%,
-					transparent 50%,
-					rgba(229, 57, 53, 0.2) 50%,
-					rgba(229, 57, 53, 0.2) 62.5%,
-					transparent 62.5%,
-					transparent 75%,
-					rgba(229, 57, 53, 0.2) 75%,
-					rgba(229, 57, 53, 0.2) 87.5%,
-					transparent 87.5%
+					rgba(229, 57, 53, 1) 0 2px,
+					transparent 2px 4px
 				);
-				background-size: 10px 10px;
 			}
 
 			.legendBoxText {
