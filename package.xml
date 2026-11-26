@@ -44,5 +44,7 @@
 
     <instructions type="update" fromversion="2.0.1">
         <instruction type="file" />
+        <instruction type="cronjob" />
+        <instruction type="fileDelete" />
     </instructions>
 </package>
