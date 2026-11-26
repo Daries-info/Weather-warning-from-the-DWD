@@ -22,15 +22,15 @@
 	{if $__isNewRegion}
 		{assign var='__isNewRegion' value=false}
 
-		<section class="section sectionContainerList">
+		<section class="section weatherWarning__region">
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{$warning->getRegionName()}</h2>
 			</header>
 
-			<ol class="containerList weatherWarning__listView">
+			<ol class="weatherWarning__grid">
 	{/if}
 
-				<li class="weatherWarningRegion">
+				<li class="weatherWarning__card">
 					{include file='__weatherWarning'}
 				</li>
 {/foreach}
