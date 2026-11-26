@@ -25,17 +25,17 @@ class WeatherWarningRegionBoxController extends AbstractBoxController
         }
 
         $user = WCF::getUser();
-        $weatherWarningHandler = UserWeatherWarningHandler::getInstance();
-        $region = $weatherWarningHandler->getRegion();
-        $warnings = $weatherWarningHandler->getWarnings();
-        $warningTime = WeatherWarningHandler::getInstance()->getWeatherWarningTime();
-
         if (
             $user->userID
             && !$user->getUserOption('weatherWarningRegionEnable')
         ) {
             return;
         }
+
+        $weatherWarningHandler = UserWeatherWarningHandler::getInstance();
+        $region = $weatherWarningHandler->getRegion();
+        $warnings = $weatherWarningHandler->getWarnings();
+        $warningTime = WeatherWarningHandler::getInstance()->getWeatherWarningTime();
 
         $this->content = WCF::getTPL()->fetch(
             'boxWeatherWarningRegion',
