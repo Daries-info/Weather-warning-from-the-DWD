@@ -79,6 +79,7 @@ class WeatherWarningListView extends AbstractListView
 
         $this->addAvailableSortFields([
             new ListViewSortField('severity', 'wcf.weatherWarning.severity'),
+            new ListViewSortField('start', 'wcf.weatherWarning.start'),
             new ListViewSortField('regionName', 'wcf.weatherWarning.region'),
         ]);
         $this->setDefaultSortField('severity');
@@ -317,6 +318,7 @@ class WeatherWarningListView extends AbstractListView
 
         $comparison = match ($this->getSortField()) {
             'severity' => $a->getSeverityLevel() <=> $b->getSeverityLevel(),
+            'start' => $a->getStart() <=> $b->getStart(),
             default => \strcmp($a->getRegionName(), $b->getRegionName()),
         };
 
