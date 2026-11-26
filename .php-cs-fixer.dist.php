@@ -58,7 +58,7 @@ return (new PhpCsFixer\Config())
 
         'fully_qualified_strict_types' => true,
         'no_unused_imports' => true,
-        'ordered_imports' => true,
+        'ordered_imports' => ['imports_order' => ['class', 'function', 'const']],
 
         'dir_constant' => true,
         'explicit_indirect_variable' => true,
