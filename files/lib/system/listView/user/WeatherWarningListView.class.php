@@ -133,7 +133,7 @@ class WeatherWarningListView extends AbstractListView
     #[\Override]
     public function isAccessible(): bool
     {
-        return !!\MODULE_WEATHER_WARNING;
+        return parent::isAccessible() && \MODULE_WEATHER_WARNING;
     }
 
     /**
