@@ -15,14 +15,14 @@
 			<item name="wcf.acp.option.category.user.weatherWarning"><![CDATA[Wetterwarnung DWD]]></item>
 			<item name="wcf.acp.option.module_weather_warning"><![CDATA[Wetterwarnung]]></item>
 			<item name="wcf.acp.option.weather_warning_default_region"><![CDATA[Region]]></item>
-			<item name="wcf.acp.option.weather_warning_default_region.description"><![CDATA[Gebe hier einen Standard Region an. Diese Region wird genommen, wenn der Benutzer keine Angabe in seinem Profil vorgenommen hat.]]></item>
+			<item name="wcf.acp.option.weather_warning_default_region.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier eine Standardregion an. Diese Region wird genommen, wenn der Benutzer keine Angabe in seinem Profil vorgenommen hat.]]></item>
 			<item name="wcf.acp.option.weather_warning_enable_forest_fire_hazard_index_wbi"><![CDATA[Waldbrand-Gefahrenindex WBI anzeigen]]></item>
 			<item name="wcf.acp.option.weather_warning_enable_grassland_fire_index"><![CDATA[Grasland - Feuerindex anzeigen]]></item>
 		</category>
 
 		<category name="wcf.user.option">
 			<item name="wcf.user.option.category.settings.general.weatherWarning"><![CDATA[Wetterwarnung DWD]]></item>
-			<item name="wcf.user.option.error.noExist"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gebe{else}geben Sie{/if} eine gültige Region ein.]]></item>
+			<item name="wcf.user.option.error.noExist"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gib{else}geben Sie{/if} eine gültige Region ein.]]></item>
 			<item name="wcf.user.option.weatherWarningForestFireHazardIndexGermanyEnable"><![CDATA[Waldbrand-Gefahrenindex WBI anzeigen]]></item>
 			<item name="wcf.user.option.weatherWarningGermanyEnable"><![CDATA[Deutschland Wetterwarnungen anzeigen]]></item>
 			<item name="wcf.user.option.weatherWarningGrasslandFireIndexGermanyEnable"><![CDATA[Grasland - Feuerindex anzeigen]]></item>
@@ -56,15 +56,15 @@
 			<item name="wcf.weatherWarning.dwd.map.thunder"><![CDATA[Gewitter]]></item>
 			<item name="wcf.weatherWarning.dwd.map.uv"><![CDATA[UV-Strahlung]]></item>
 			<item name="wcf.weatherWarning.dwd.region"><![CDATA[Wetterwarnungen DWD ({if $region|empty}Region{else}{$region}{/if})]]></item>
-			<item name="wcf.weatherWarning.empty"><![CDATA[Aktuell liegt für die Region ({$region}) keine Warnungen vor.]]></item>
+			<item name="wcf.weatherWarning.empty"><![CDATA[Aktuell liegen für die Region ({$region}) keine Warnungen vor.]]></item>
 			<item name="wcf.weatherWarning.empty.region"><![CDATA[Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}Du in deinem{else}Sie in Ihrem{/if} {if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">Profil</a>{else}Profil{/if} das Feld "Region" {if LANGUAGE_USE_INFORMAL_VARIANT}ausfüllst{else}ausfüllen{/if}, so {if LANGUAGE_USE_INFORMAL_VARIANT}erhältst Du{else}erhalten Sie{/if} hier regionale Warnmeldungen vom DWD.]]></item>
 			<item name="wcf.weatherWarning.end"><![CDATA[Ende]]></item>
 			<item name="wcf.weatherWarning.forestFireHazardIndex"><![CDATA[Waldbrand-Gefahrenindex WBI]]></item>
 			<item name="wcf.weatherWarning.grasslandFireIndex"><![CDATA[Grasland - Feuerindex]]></item>
 			<item name="wcf.weatherWarning.more.information"><![CDATA[Mehr Informationen]]></item>
-			<item name="wcf.weatherWarning.noData"><![CDATA[Aktuell sind noch keine Wetterwarnungsdaten vorhanden. Bitte versuchen Sie es in Kürze erneut.]]></item>
+			<item name="wcf.weatherWarning.noData"><![CDATA[Aktuell sind noch keine Wetterwarnungsdaten vorhanden. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es in Kürze erneut.]]></item>
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Offen]]></item>
-			<item name="wcf.weatherWarning.notice"><![CDATA[Für Ihre Region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) liegt eine Wetterwarnung vom DWD vor!]]></item>
+			<item name="wcf.weatherWarning.notice"><![CDATA[Für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) liegt eine Wetterwarnung vom DWD vor!]]></item>
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
 			<item name="wcf.weatherWarning.region.info"><![CDATA[Info]]></item>
 			<item name="wcf.weatherWarning.region.info.text"><![CDATA[Die Regionenanzeige wurde vom Seitenadministrator konfiguriert.<br />
