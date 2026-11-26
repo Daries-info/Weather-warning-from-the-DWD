@@ -4,9 +4,9 @@
     <dl>
         <dt><label for="map">{lang}wcf.weatherWarning.box.settings.map{/lang}</label></dt>
         <dd>
-            <select name="map">
+            <select name="map" id="map">
                 {foreach from=$mapOptions key=optionKey item=optionValue}
-                    <option value="{$optionKey}" {if $map === $optionKey} selected{/if}>{$optionValue}</option>
+                    <option value="{$optionKey}"{if $map === $optionKey} selected{/if}>{$optionValue}</option>
                 {/foreach}
             </select>
         </dd>
@@ -16,9 +16,9 @@
         <dt></dt>
         <dd>
             <label>
-        <input type="checkbox" name="viewMapInfo" value="1" {if $viewMapInfo} checked{/if}>
+                <input type="checkbox" name="viewMapInfo" value="1"{if $viewMapInfo} checked{/if}>
                 {lang}wcf.weatherWarning.box.settings.viewMapInfo{/lang}
-                </label>
+            </label>
         </dd>
     </dl>
 
