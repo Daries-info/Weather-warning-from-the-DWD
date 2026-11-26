@@ -11,10 +11,12 @@
 						<span>{$warning->getHeadline()}</span>
 					</div>
 
-					<div class="warnLevel">
-						<div class="warnColor"></div>
-						<div class="levelRules level{$warning->getLevel()}"></div>
-					</div>
+					{if $warning->getWarnLevel()}
+						<div class="warnLevel">
+							<div class="warnColor"></div>
+							<div class="levelRules level{$warning->getWarnLevel()}"></div>
+						</div>
+					{/if}
 
 					<dl class="plain dataList containerContent">
 						<dt><label>{lang}wcf.weatherWarning.start{/lang}</label></dt>

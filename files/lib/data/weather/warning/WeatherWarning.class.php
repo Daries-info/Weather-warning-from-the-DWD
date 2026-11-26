@@ -32,6 +32,15 @@ final class WeatherWarning extends DatabaseObject
 {
     protected static $databaseTableIndexName = 'warningID';
 
+    private const int TYPE_HEAT = 8;
+
+    private const int TYPE_UV = 9;
+
+    /**
+     * A preliminary information always announces a severe weather warning.
+     */
+    private const int PRELIMINARY_ICON_LEVEL = 3;
+
     /**
      * Creates a new instance of WeatherWarning class.
      *
@@ -101,21 +110,9 @@ final class WeatherWarning extends DatabaseObject
 
     public function getIcon(): string
     {
-        $level = $this->getLevel();
-
-        // individual level
-        switch ($this->getType()) {
-            case 8:
-                if ($level > 38) {
-                    $level = 2;
-                } else {
-                    $level = 1;
-                }
-                break;
-
-            case 9:
-                $level = 1;
-                break;
+        $level = $this->getWarnLevel();
+        if ($level === 0) {
+            $level = self::PRELIMINARY_ICON_LEVEL;
         }
 
         return \sprintf(
@@ -135,6 +132,23 @@ final class WeatherWarning extends DatabaseObject
     public function getLevel(): int
     {
         return $this->level;
+    }
+
+    /**
+     * Returns the warning level of the DWD (1 to 4), or 0 for a preliminary information.
+     *
+     * The `level` of `warnings.json` is the warning level plus one, except for heat and UV warnings,
+     * which use levels of their own.
+     *
+     * @since 2.0.2
+     */
+    public function getWarnLevel(): int
+    {
+        return match ($this->getType()) {
+            self::TYPE_HEAT => $this->getLevel() > 38 ? 2 : 1,
+            self::TYPE_UV => 1,
+            default => \max(0, \min(4, $this->getLevel() - 1)),
+        };
     }
 
     public function getRegionName(): string
