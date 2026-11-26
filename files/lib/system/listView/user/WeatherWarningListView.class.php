@@ -24,11 +24,30 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  */
 class WeatherWarningListView extends AbstractListView
 {
+    /**
+     * Language items of the warning types of the DWD.
+     */
+    private const array TYPE_LANGUAGE_ITEMS = [
+        0 => 'wcf.weatherWarning.dwd.map.thunder',
+        1 => 'wcf.weatherWarning.dwd.map.storm',
+        2 => 'wcf.weatherWarning.dwd.map.rain',
+        3 => 'wcf.weatherWarning.dwd.map.snow',
+        4 => 'wcf.weatherWarning.dwd.map.fog',
+        5 => 'wcf.weatherWarning.dwd.map.frost',
+        6 => 'wcf.weatherWarning.dwd.map.blackIce',
+        7 => 'wcf.weatherWarning.dwd.map.thaw',
+        8 => 'wcf.weatherWarning.dwd.map.heat',
+        9 => 'wcf.weatherWarning.dwd.map.uv',
+    ];
+
     /** @var array<string, string> */
     private array $availableRegions;
 
     /** @var array<string, string> */
     private array $availableStates;
+
+    /** @var array<int, string> */
+    private array $availableTypes;
 
     public function __construct()
     {
@@ -45,6 +64,7 @@ class WeatherWarningListView extends AbstractListView
                 }
             },
             new MultipleSelectFilter($this->getAvailableStates(), 'state', 'wcf.weatherWarning.state', labelLanguageItems: false),
+            new MultipleSelectFilter($this->getAvailableTypes(), 'type', 'wcf.weatherWarning.type', labelLanguageItems: false),
         ]);
 
         $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
@@ -115,6 +135,28 @@ class WeatherWarningListView extends AbstractListView
     }
 
     /**
+     * @return array<int, string>
+     */
+    private function getAvailableTypes(): array
+    {
+        if (!isset($this->availableTypes)) {
+            $this->availableTypes = [];
+            foreach (WeatherWarningHandler::getInstance()->getWeatherWarning() as $warnings) {
+                foreach ($warnings as $warning) {
+                    $type = $warning->getType();
+                    if (isset(self::TYPE_LANGUAGE_ITEMS[$type])) {
+                        $this->availableTypes[$type] = WCF::getLanguage()->get(self::TYPE_LANGUAGE_ITEMS[$type]);
+                    }
+                }
+            }
+
+            \asort($this->availableTypes);
+        }
+
+        return $this->availableTypes;
+    }
+
+    /**
      * Returns the conditions of the active filters that each weather warning must meet,
      * the region filter is already applied when the data is loaded.
      *
@@ -128,6 +170,11 @@ class WeatherWarningListView extends AbstractListView
         if (($activeFilters['state'] ?? '') !== '') {
             $states = \explode(',', $activeFilters['state']);
             $conditions[] = static fn(WeatherWarning $warning): bool => \in_array($warning->getState(), $states, true);
+        }
+
+        if (($activeFilters['type'] ?? '') !== '') {
+            $types = \array_map(\intval(...), \explode(',', $activeFilters['type']));
+            $conditions[] = static fn(WeatherWarning $warning): bool => \in_array($warning->getType(), $types, true);
         }
 
         return $conditions;

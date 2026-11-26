@@ -69,6 +69,7 @@
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
 			<item name="wcf.weatherWarning.start"><![CDATA[Beginn]]></item>
 			<item name="wcf.weatherWarning.state"><![CDATA[Bundesland]]></item>
+			<item name="wcf.weatherWarning.type"><![CDATA[Warnart]]></item>
 			<item name="wcf.weatherWarning.warningTime"><![CDATA[Letzte Aktualisierung: {time time=$warningTime}]]></item>
 			<item name="wcf.weatherWarning.viewFullSize"><![CDATA[Großansicht]]></item>
 		</category>
