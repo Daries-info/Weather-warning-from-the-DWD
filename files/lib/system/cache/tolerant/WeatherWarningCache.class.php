@@ -10,7 +10,9 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use wcf\data\weather\warning\WeatherWarning;
 use wcf\system\cache\tolerant\data\WeatherWarningCacheData;
+use wcf\system\io\AtomicWriter;
 use wcf\system\io\HttpFactory;
+use wcf\util\FileUtil;
 
 use function wcf\functions\exception\logThrowable;
 
@@ -59,6 +61,13 @@ final class WeatherWarningCache extends AbstractTolerantCache
     ];
 
     /**
+     * Directory relative to `WCF_DIR` that holds the downloaded maps and fire indices.
+     *
+     * @since 2.0.2
+     */
+    public const string IMAGE_DIRECTORY = '_data/public/weatherWarning/';
+
+    /**
      * Rebuilds no more often than every 15 minutes, matching the DWD's own update cadence.
      */
     private const LIFETIME = 900;
@@ -82,19 +91,25 @@ final class WeatherWarningCache extends AbstractTolerantCache
      *
      * All resources are requested concurrently. If the warnings cannot be loaded, the whole rebuild
      * is aborted and the previously cached (now merely stale) data continues to be served, instead
-     * of overwriting good data with an empty result. Maps and fire indices that cannot be loaded
-     * are left empty, so that the boxes showing them are hidden until the next rebuild.
+     * of overwriting good data with an empty result. Maps and fire indices are stored in
+     * `IMAGE_DIRECTORY`, those that cannot be loaded are left empty, so that the boxes showing
+     * them are hidden until the next rebuild.
      */
     #[\Override]
     protected function rebuildCacheData(): WeatherWarningCacheData
     {
+        FileUtil::makePath(WCF_DIR . self::IMAGE_DIRECTORY);
+
         $forestFireHazardIndexWBI = WEATHER_WARNING_ENABLE_FOREST_FIRE_HAZARD_INDEX_WBI
-            ? $this->requestImage(self::GERMANY_FORESTFIREHAZARDINDEXWBI_URL)
+            ? $this->requestImage('forestFireHazardIndexWBI', self::GERMANY_FORESTFIREHAZARDINDEXWBI_URL)
             : Create::promiseFor('');
         $grasslandFireIndex = WEATHER_WARNING_ENABLE_GRASSLAND_FIRE_INDEX
-            ? $this->requestImage(self::GERMANY_GRASSLANDFIREINDEX_URL)
+            ? $this->requestImage('grasslandFireIndex', self::GERMANY_GRASSLANDFIREINDEX_URL)
             : Create::promiseFor('');
-        $germanyMaps = \array_map($this->requestImage(...), self::GERMANY_MAP_URLS);
+        $germanyMaps = [];
+        foreach (self::GERMANY_MAP_URLS as $key => $url) {
+            $germanyMaps[$key] = $this->requestImage($key, $url);
+        }
 
         [$forestFireHazardIndexWBI, $grasslandFireIndex, $germanyMaps, [$warnings, $time]] = Utils::all([
             $forestFireHazardIndexWBI,
@@ -119,28 +134,41 @@ final class WeatherWarningCache extends AbstractTolerantCache
     }
 
     /**
-     * Requests an image from the given URL, resolving to a base64-encoded data URI.
+     * Requests an image from the given URL and stores it as `{$name}.png` in `IMAGE_DIRECTORY`,
+     * resolving to the filename with a version derived from its content.
      *
-     * If the image cannot be loaded, the failure is logged and the promise resolves to an empty string,
+     * If the image cannot be loaded or stored, the failure is logged and the promise resolves to an empty string,
      * so that a single missing image does not prevent the warnings from being updated.
      */
-    private function requestImage(string $url): PromiseInterface
+    private function requestImage(string $name, string $url): PromiseInterface
     {
         $request = new Request('GET', $url, ['accept' => 'image/*']);
 
         return $this->getHttpClient()->sendAsync($request)->then(
-            static function (ResponseInterface $response) use ($url): string {
+            static function (ResponseInterface $response) use ($name, $url): string {
                 $dataString = (string)$response->getBody();
                 if ($dataString === '') {
                     throw new \RuntimeException(\sprintf("Received an empty weather warning image from '%s'.", $url));
                 }
 
-                return \sprintf('data:image/png;base64,%s', \base64_encode($dataString));
+                $filename = \sprintf('%s.png', $name);
+                $file = new AtomicWriter(
+                    \sprintf(
+                        '%s%s%s',
+                        WCF_DIR,
+                        self::IMAGE_DIRECTORY,
+                        $filename
+                    )
+                );
+                $file->write($dataString);
+                $file->flush();
+
+                return \sprintf('%s?v=%s', $filename, \hash('xxh3', $dataString));
             }
         )->otherwise(
             static function (mixed $reason) use ($url): string {
                 logThrowable(new \RuntimeException(
-                    \sprintf("Failed to load weather warning image from '%s'.", $url),
+                    \sprintf("Failed to load or store the weather warning image from '%s'.", $url),
                     previous: $reason instanceof \Throwable ? $reason : null
                 ));
 

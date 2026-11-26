@@ -28,7 +28,7 @@ final class WeatherWarningCacheData
     }
 
     /**
-     * Returns the map of Germany for the given key.
+     * Returns the filename of the map of Germany for the given key.
      */
     public function getGermanyMap(string $key): string
     {

@@ -7,6 +7,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\cache\tolerant\data\WeatherWarningCacheData;
 use wcf\system\cache\tolerant\WeatherWarningCache;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 use function wcf\functions\exception\logThrowable;
 
@@ -33,27 +34,27 @@ final class WeatherWarningHandler extends SingletonFactory
     private array $activeWarnings;
 
     /**
-     * Returns the forest fire hazard index.
+     * Returns the URL of the forest fire hazard index, or an empty string if it is not available.
      */
     public function getForestFireHazardIndexWBI(): string
     {
-        return $this->getCache()->forestFireHazardIndexWBI;
+        return $this->getImageUrl($this->getCache()->forestFireHazardIndexWBI);
     }
 
     /**
-     * Returns the map of Germany.
+     * Returns the URL of the map of Germany, or an empty string if it is not available.
      */
     public function getGermanyMap(string $key): string
     {
-        return $this->getCache()->getGermanyMap($key);
+        return $this->getImageUrl($this->getCache()->getGermanyMap($key));
     }
 
     /**
-     * Returns the grassland fire index.
+     * Returns the URL of the grassland fire index, or an empty string if it is not available.
      */
     public function getGrasslandFireIndex(): string
     {
-        return $this->getCache()->grasslandFireIndex;
+        return $this->getImageUrl($this->getCache()->grasslandFireIndex);
     }
 
     /**
@@ -87,6 +88,20 @@ final class WeatherWarningHandler extends SingletonFactory
     public function getWeatherWarningTime(): int
     {
         return $this->getCache()->time;
+    }
+
+    private function getImageUrl(string $filename): string
+    {
+        if ($filename === '') {
+            return '';
+        }
+
+        return \sprintf(
+            '%s%s%s',
+            WCF::getPath(),
+            WeatherWarningCache::IMAGE_DIRECTORY,
+            $filename
+        );
     }
 
     private function getCache(): WeatherWarningCacheData
