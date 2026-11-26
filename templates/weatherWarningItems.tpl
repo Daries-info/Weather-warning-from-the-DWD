@@ -32,7 +32,7 @@
 
 				<li class="weatherWarningRegion">
 					<div class="headline">
-						{@$warning->getIcon()}
+						<img src="{$warning->getIconUrl()}" alt="{$warning->getHeadline()}" loading="lazy">
 						<span>{$warning->getHeadline()}</span>
 					</div>
 					{if $warning->getWarnLevel()}

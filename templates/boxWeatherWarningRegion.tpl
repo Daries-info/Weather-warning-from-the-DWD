@@ -7,7 +7,7 @@
 			{foreach from=$warnings item=warning}
 				<div class="weatherWarningRegion warningBox">
 					<div class="headline">
-						{@$warning->getIcon()}
+						<img src="{$warning->getIconUrl()}" alt="{$warning->getHeadline()}" loading="lazy">
 						<span>{$warning->getHeadline()}</span>
 					</div>
 

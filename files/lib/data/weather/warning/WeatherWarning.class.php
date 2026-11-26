@@ -4,7 +4,6 @@ namespace wcf\data\weather\warning;
 
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Represents a weather warning.
@@ -108,20 +107,19 @@ final class WeatherWarning extends DatabaseObject
         return $this->headline;
     }
 
-    public function getIcon(): string
+    /**
+     * Returns the URL of the icon for the type and warning level.
+     *
+     * @since 2.0.2
+     */
+    public function getIconUrl(): string
     {
         $level = $this->getWarnLevel();
         if ($level === 0) {
             $level = self::PRELIMINARY_ICON_LEVEL;
         }
 
-        return \sprintf(
-            '<img src="%simages/weather/icon_%d_%d.webp" alt="%s" loading="lazy">',
-            WCF::getPath(),
-            $this->getType(),
-            $level,
-            StringUtil::encodeHTML($this->getHeadline())
-        );
+        return \sprintf('%simages/weather/icon_%d_%d.webp', WCF::getPath(), $this->getType(), $level);
     }
 
     public function getInstruction(): string
