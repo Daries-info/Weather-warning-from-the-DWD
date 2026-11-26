@@ -77,8 +77,12 @@ class WeatherWarningListView extends AbstractListView
             new BooleanFilter('hidePreliminary', 'wcf.weatherWarning.hidePreliminary'),
         ]);
 
-        $this->addAvailableSortField(new ListViewSortField('regionName', 'wcf.weatherWarning.region'));
-        $this->setDefaultSortField('regionName');
+        $this->addAvailableSortFields([
+            new ListViewSortField('severity', 'wcf.weatherWarning.severity'),
+            new ListViewSortField('regionName', 'wcf.weatherWarning.region'),
+        ]);
+        $this->setDefaultSortField('severity');
+        $this->setDefaultSortOrder('DESC');
         $this->setItemsPerPage(50);
     }
 
@@ -301,7 +305,8 @@ class WeatherWarningListView extends AbstractListView
     }
 
     /**
-     * Compares two weather warnings by the selected sort field, the warnings of the own region always come first.
+     * Compares two weather warnings by the selected sort field and then by their start,
+     * the warnings of the own region always come first.
      */
     private function compareWarnings(WeatherWarning $a, WeatherWarning $b): int
     {
@@ -311,16 +316,15 @@ class WeatherWarningListView extends AbstractListView
         }
 
         $comparison = match ($this->getSortField()) {
-            default => $this->compareByRegion($a, $b),
+            'severity' => $a->getSeverityLevel() <=> $b->getSeverityLevel(),
+            default => \strcmp($a->getRegionName(), $b->getRegionName()),
         };
 
-        return $this->getSortOrder() === 'ASC' ? $comparison : -$comparison;
-    }
+        if ($this->getSortOrder() === 'DESC') {
+            $comparison = -$comparison;
+        }
 
-    private function compareByRegion(WeatherWarning $a, WeatherWarning $b): int
-    {
-        return \strcmp($a->getRegionName(), $b->getRegionName())
-            ?: $a->getStart() <=> $b->getStart();
+        return $comparison ?: $a->getStart() <=> $b->getStart();
     }
 
     #[\Override]
