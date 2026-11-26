@@ -29,7 +29,7 @@ class WeatherWarningForestFireHazardIndexGermanyBoxController extends AbstractBo
         }
 
         $forestFireHazardIndexMap = WeatherWarningHandler::getInstance()->getForestFireHazardIndexWBI();
-        if ($forestFireHazardIndexMap === "") {
+        if ($forestFireHazardIndexMap === '') {
             return;
         }
 

@@ -29,7 +29,7 @@ class WeatherWarningGrasslandFireIndexGermanyBoxController extends AbstractBoxCo
         }
 
         $grasslandFireIndexMap = WeatherWarningHandler::getInstance()->getGrasslandFireIndex();
-        if ($grasslandFireIndexMap === "") {
+        if ($grasslandFireIndexMap === '') {
             return;
         }
 

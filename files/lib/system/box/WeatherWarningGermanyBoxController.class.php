@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class WeatherWarningGermanyBoxController extends AbstractBoxController implements IConditionBoxController
 {
-    protected string $map = "map";
+    protected string $map = 'map';
 
     protected bool $viewMapInfo = false;
 
