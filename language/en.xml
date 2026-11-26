@@ -66,11 +66,6 @@
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Open]]></item>
 			<item name="wcf.weatherWarning.notice"><![CDATA[For your region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) there is a weather warning from the DWD!]]></item>
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
-			<item name="wcf.weatherWarning.region.info"><![CDATA[Info]]></item>
-			<item name="wcf.weatherWarning.region.info.text"><![CDATA[The region display has been set up by the administrator of this page.<br />
-<br />
-You can customize {if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<a href="{link controller='User' object=$__wcf->user forceFrontend=true}editOnInit=true#about{/link}">your profile</a>{else}your profile{/if} by specifying your region to tailor the region display to your personal preferences.]]></item>
-			<item name="wcf.weatherWarning.sort"><![CDATA[Sort by]]></item>
 			<item name="wcf.weatherWarning.start"><![CDATA[Start]]></item>
 			<item name="wcf.weatherWarning.warningTime"><![CDATA[Last update: {time time=$warningTime}]]></item>
 			<item name="wcf.weatherWarning.viewFullSize"><![CDATA[View full size]]></item>
@@ -80,5 +75,8 @@ You can customize {if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<a hr
 	<delete>
 		<item name="wcf.acp.option.weather_warning_enable_forestFireHazardIndexWBI" />
 		<item name="wcf.acp.option.weather_warning_enable_grasslandFireIndex" />
+		<item name="wcf.weatherWarning.region.info" />
+		<item name="wcf.weatherWarning.region.info.text" />
+		<item name="wcf.weatherWarning.sort" />
 	</delete>
 </language>

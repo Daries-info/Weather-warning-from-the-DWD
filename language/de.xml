@@ -66,11 +66,6 @@
 			<item name="wcf.weatherWarning.noEnd"><![CDATA[Offen]]></item>
 			<item name="wcf.weatherWarning.notice"><![CDATA[Für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Region ({$__wcf->getUserWeatherWarningHandler()->getRegion()}) liegt eine Wetterwarnung vom DWD vor!]]></item>
 			<item name="wcf.weatherWarning.region"><![CDATA[Region]]></item>
-			<item name="wcf.weatherWarning.region.info"><![CDATA[Info]]></item>
-			<item name="wcf.weatherWarning.region.info.text"><![CDATA[Die Regionenanzeige wurde vom Seitenadministrator konfiguriert.<br />
-<br />
-Um {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Anzeige zu personalisieren, {if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<a href="{link controller='User' object=$__wcf->user forceFrontend=true}editOnInit=true#about{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}kannst Du Dein{else}können Sie Ihr{/if} Profil</a>{else}{if LANGUAGE_USE_INFORMAL_VARIANT}kannst Du Dein{else}können Sie Ihr{/if}{/if} bearbeiten und {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Region angeben.]]></item>
-			<item name="wcf.weatherWarning.sort"><![CDATA[Sortierung]]></item>
 			<item name="wcf.weatherWarning.start"><![CDATA[Beginn]]></item>
 			<item name="wcf.weatherWarning.warningTime"><![CDATA[Letzte Aktualisierung: {time time=$warningTime}]]></item>
 			<item name="wcf.weatherWarning.viewFullSize"><![CDATA[Großansicht]]></item>
@@ -80,5 +75,8 @@ Um {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Anzeige zu personalisi
 	<delete>
 		<item name="wcf.acp.option.weather_warning_enable_forestFireHazardIndexWBI" />
 		<item name="wcf.acp.option.weather_warning_enable_grasslandFireIndex" />
+		<item name="wcf.weatherWarning.region.info" />
+		<item name="wcf.weatherWarning.region.info.text" />
+		<item name="wcf.weatherWarning.sort" />
 	</delete>
 </language>
