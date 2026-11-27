@@ -33,9 +33,7 @@ class WeatherWarningRegionOptionType extends TextOptionType
         if ($newValue !== null && $newValue !== '') {
             $regionList = new WeatherWarningRegionList();
             $regionList->getConditionBuilder()->add('regionName = ?', [$newValue]);
-            $count = $regionList->countObjects();
-
-            if (!$count) {
+            if ($regionList->countObjects() === 0) {
                 throw new UserInputException($option->optionName, 'noExist');
             }
         }
