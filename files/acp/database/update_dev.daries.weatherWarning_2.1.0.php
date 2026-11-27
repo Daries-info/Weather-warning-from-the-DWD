@@ -3,7 +3,7 @@
 /**
  * Adds the unique index on the region name. Runs after the update script, which removes the duplicates.
  *
- * @author  Marco D., Alexander Langer (Source of ideas)
+ * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2026 Daries.info
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  * @since 2.1

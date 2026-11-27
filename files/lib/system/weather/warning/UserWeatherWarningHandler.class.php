@@ -10,7 +10,7 @@ use wcf\system\WCF;
 /**
  * Weather warning handler for the current user.
  *
- * @author  Marco D., Alexander Langer (Source of ideas)
+ * @author  Marco Daries, Alexander Langer (Source of ideas)
  * @copyright   2020-2026 Daries.info
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  */
