@@ -10,13 +10,13 @@ use wcf\system\WCF;
 /**
  * Executes region related actions.
  *
- * @author  Marco Daries, Alexander Langer (Source of ideas)
- * @copyright   2020-2026 Daries.info
+ * @author Marco Daries, Alexander Langer (Source of ideas)
+ * @copyright 2020-2026 Daries.info
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  *
- * @method      WeatherWarningRegion            create()
- * @method      WeatherWarningRegionEditor[]    getObjects()
- * @method      WeatherWarningRegionEditor      getSingleObject()
+ * @method WeatherWarningRegion create()
+ * @method WeatherWarningRegionEditor[] getObjects()
+ * @method WeatherWarningRegionEditor getSingleObject()
  *
  * @extends AbstractDatabaseObjectAction<WeatherWarningRegion, WeatherWarningRegionEditor>
  */

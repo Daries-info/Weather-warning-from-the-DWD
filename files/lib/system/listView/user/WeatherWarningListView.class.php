@@ -19,8 +19,8 @@ use wcf\system\weather\warning\WeatherWarningHandler;
 /**
  * List view for the list of weather warnings.
  *
- * @author  Marco Daries, Alexander Langer (Source of ideas)
- * @copyright   2020-2026 Daries.info
+ * @author Marco Daries, Alexander Langer (Source of ideas)
+ * @copyright 2020-2026 Daries.info
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  *
  * @extends AbstractListView<WeatherWarning, DatabaseObjectList<WeatherWarning>>
