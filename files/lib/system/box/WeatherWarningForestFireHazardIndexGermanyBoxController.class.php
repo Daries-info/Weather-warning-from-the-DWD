@@ -12,7 +12,7 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  */
-class WeatherWarningForestFireHazardIndexGermanyBoxController extends AbstractBoxController
+final class WeatherWarningForestFireHazardIndexGermanyBoxController extends AbstractBoxController
 {
     #[\Override]
     protected function loadContent(): void

@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  */
-class WeatherWarningGermanyBoxController extends AbstractBoxController implements IConditionBoxController
+final class WeatherWarningGermanyBoxController extends AbstractBoxController implements IConditionBoxController
 {
     protected string $map = 'map';
 

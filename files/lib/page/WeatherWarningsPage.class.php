@@ -15,7 +15,7 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  *
  * @extends AbstractListViewPage<WeatherWarningListView>
  */
-class WeatherWarningsPage extends AbstractListViewPage
+final class WeatherWarningsPage extends AbstractListViewPage
 {
     public $neededModules = ['MODULE_WEATHER_WARNING'];
 

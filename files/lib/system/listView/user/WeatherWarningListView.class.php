@@ -25,7 +25,7 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  *
  * @extends AbstractListView<WeatherWarning, DatabaseObjectList<WeatherWarning>>
  */
-class WeatherWarningListView extends AbstractListView
+final class WeatherWarningListView extends AbstractListView
 {
     /**
      * Language items of the warning types of the DWD.
