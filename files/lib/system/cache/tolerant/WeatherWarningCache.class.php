@@ -31,22 +31,24 @@ final class WeatherWarningCache extends AbstractTolerantCache
     /**
      * URL to the forest fire hazard index in Germany.
      */
-    public const GERMANY_FORESTFIREHAZARDINDEXWBI_URL = 'https://www.dwd.de/DWD/warnungen/agrar/wbx/wbx_stationen.png';
+    public const string GERMANY_FORESTFIREHAZARDINDEXWBI_URL = 'https://www.dwd.de/DWD/warnungen/agrar/wbx/wbx_stationen.png';
 
     /**
      * URL to grassland fire index in Germany.
      */
-    public const GERMANY_GRASSLANDFIREINDEX_URL = 'https://www.dwd.de/DWD/warnungen/agrar/glfi/glfi_stationen.png';
+    public const string GERMANY_GRASSLANDFIREINDEX_URL = 'https://www.dwd.de/DWD/warnungen/agrar/glfi/glfi_stationen.png';
 
     /**
      * URL for regional weather warnings in Germany.
      */
-    public const GERMANY_REGION_URL = 'https://www.dwd.de/DWD/warnungen/warnapp/json/warnings.json';
+    public const string GERMANY_REGION_URL = 'https://www.dwd.de/DWD/warnungen/warnapp/json/warnings.json';
 
     /**
      * URLs for various warning cards in Germany.
+     *
+     * @var array<string, string>
      */
-    public const GERMANY_MAP_URLS = [
+    public const array GERMANY_MAP_URLS = [
         'blackIce' => 'https://www.dwd.de/DWD/warnungen/warnapp_gemeinden/json/warnungen_gemeinde_map_de_glatteis.png',
         'frost' => 'https://www.dwd.de/DWD/warnungen/warnapp_gemeinden/json/warnungen_gemeinde_map_de_frost.png',
         'fog' => 'https://www.dwd.de/DWD/warnungen/warnapp_gemeinden/json/warnungen_gemeinde_map_de_nebel.png',
@@ -70,13 +72,13 @@ final class WeatherWarningCache extends AbstractTolerantCache
     /**
      * Rebuilds no more often than every 15 minutes, matching the DWD's own update cadence.
      */
-    private const LIFETIME = 900;
+    private const int LIFETIME = 900;
 
     /**
      * Maximum total transfer duration per request in seconds. Requests run concurrently,
      * so this is also the upper bound for a complete rebuild.
      */
-    private const HTTP_TIMEOUT = 10;
+    private const int HTTP_TIMEOUT = 10;
 
     private ClientInterface $httpClient;
 
