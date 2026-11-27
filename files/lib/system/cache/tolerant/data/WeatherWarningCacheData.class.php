@@ -12,18 +12,18 @@ use wcf\data\weather\warning\WeatherWarning;
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  * @since 2.0.1
  */
-final readonly class WeatherWarningCacheData
+final class WeatherWarningCacheData
 {
     /**
      * @param array<string, WeatherWarning[]> $warnings
      * @param array<string, string> $germanyMaps
      */
     public function __construct(
-        public array $warnings,
-        public int $time,
-        public string $forestFireHazardIndexWBI,
-        public string $grasslandFireIndex,
-        public array $germanyMaps
+        public readonly array $warnings,
+        public readonly int $time,
+        public readonly string $forestFireHazardIndexWBI,
+        public readonly string $grasslandFireIndex,
+        public readonly array $germanyMaps
     ) {
     }
 

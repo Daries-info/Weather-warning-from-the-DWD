@@ -12,9 +12,9 @@ use wcf\system\listView\user\WeatherWarningListView;
  * @copyright   2020-2024 Daries.dev
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  */
-final readonly class WeatherWarningListViewInitialized implements IPsr14Event
+final class WeatherWarningListViewInitialized implements IPsr14Event
 {
-    public function __construct(public WeatherWarningListView $listView)
+    public function __construct(public readonly WeatherWarningListView $listView)
     {
     }
 }
