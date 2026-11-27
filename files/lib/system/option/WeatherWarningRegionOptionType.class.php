@@ -21,14 +21,12 @@ class WeatherWarningRegionOptionType extends TextOptionType
      */
     public function getFormElement(Option $option, $value): string
     {
-        WCF::getTPL()->assign([
+        return WCF::getTPL()->render('wcf', 'weatherWarningRegionOptionType', [
             'option' => $option,
             'inputType' => $this->inputType,
             'inputClass' => $this->inputClass,
             'value' => $value,
         ]);
-
-        return WCF::getTPL()->fetch('weatherWarningRegionOptionType');
     }
 
     /**

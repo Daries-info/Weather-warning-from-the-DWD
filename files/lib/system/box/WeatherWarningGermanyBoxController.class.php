@@ -68,11 +68,11 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
 
         \asort($mapOptions);
 
-        return WCF::getTPL()->fetch('boxWeatherWarningGermanyConditions', 'wcf', [
+        return WCF::getTPL()->render('wcf', 'boxWeatherWarningGermanyConditions', [
             'map' => $this->map,
             'mapOptions' => $mapOptions,
             'viewMapInfo' => $this->viewMapInfo,
-        ], true);
+        ]);
     }
 
     /**
@@ -94,15 +94,14 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
             return;
         }
 
-        $this->content = WCF::getTPL()->fetch(
-            'boxWeatherWarningGermany',
+        $this->content = WCF::getTPL()->render(
             'wcf',
+            'boxWeatherWarningGermany',
             [
                 'germanyMap' => $germanyMap,
                 'map' => $this->map,
                 'viewMapInfo' => $this->viewMapInfo,
-            ],
-            true
+            ]
         );
     }
 

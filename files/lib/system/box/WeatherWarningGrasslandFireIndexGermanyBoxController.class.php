@@ -33,13 +33,12 @@ class WeatherWarningGrasslandFireIndexGermanyBoxController extends AbstractBoxCo
             return;
         }
 
-        $this->content = WCF::getTPL()->fetch(
-            'boxWeatherWarningGrasslandFireIndexGermany',
+        $this->content = WCF::getTPL()->render(
             'wcf',
+            'boxWeatherWarningGrasslandFireIndexGermany',
             [
                 'grasslandFireIndexMap' => $grasslandFireIndexMap,
-            ],
-            true
+            ]
         );
     }
 }

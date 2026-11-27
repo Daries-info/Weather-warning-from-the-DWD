@@ -33,13 +33,12 @@ class WeatherWarningForestFireHazardIndexGermanyBoxController extends AbstractBo
             return;
         }
 
-        $this->content = WCF::getTPL()->fetch(
-            'boxWeatherWarningForestFireHazardIndexGermany',
+        $this->content = WCF::getTPL()->render(
             'wcf',
+            'boxWeatherWarningForestFireHazardIndexGermany',
             [
                 'forestFireHazardIndexMap' => $forestFireHazardIndexMap,
-            ],
-            true
+            ]
         );
     }
 }
