@@ -59,9 +59,7 @@ final class UserWeatherWarningHandler extends SingletonFactory
         return $this->getWarnings() !== [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init(): void
     {
         if (!MODULE_WEATHER_WARNING) {

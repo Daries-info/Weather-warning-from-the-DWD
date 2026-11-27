@@ -15,9 +15,7 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  */
 class WeatherWarningRegionBoxController extends AbstractBoxController
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent(): void
     {
         if (!MODULE_WEATHER_WARNING) {

@@ -13,9 +13,7 @@ use wcf\acp\form\UserOptionAddForm;
  */
 class WeatherWarningRegionUserOptionAddListener implements IParameterizedEventListener
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute($eventObj, $className, $eventName, array &$parameters): void
     {
         UserOptionAddForm::$availableOptionTypes[] = 'weatherWarningRegion';

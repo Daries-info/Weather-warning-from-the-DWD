@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 class WeatherWarningRegionOptionType extends TextOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, $value): string
     {
         return WCF::getTPL()->render('wcf', 'weatherWarningRegionOptionType', [
@@ -29,9 +27,7 @@ class WeatherWarningRegionOptionType extends TextOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, $newValue): void
     {
         if ($newValue !== null && $newValue !== '') {

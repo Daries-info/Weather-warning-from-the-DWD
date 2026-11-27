@@ -27,9 +27,7 @@ class WeatherWarningRegionAction extends AbstractDatabaseObjectAction implements
      */
     protected $className = WeatherWarningRegionEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchResultList(): array
     {
         $searchString = $this->parameters['data']['searchString'];
@@ -57,9 +55,7 @@ class WeatherWarningRegionAction extends AbstractDatabaseObjectAction implements
         return $list;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetSearchResultList(): void
     {
         $this->readString('searchString', false, 'data');

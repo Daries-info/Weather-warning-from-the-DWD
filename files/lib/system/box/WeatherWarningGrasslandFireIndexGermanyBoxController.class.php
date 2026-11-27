@@ -14,9 +14,7 @@ use wcf\system\weather\warning\WeatherWarningHandler;
  */
 class WeatherWarningGrasslandFireIndexGermanyBoxController extends AbstractBoxController
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent(): void
     {
         if (!MODULE_WEATHER_WARNING || !WEATHER_WARNING_ENABLE_GRASSLAND_FIRE_INDEX) {

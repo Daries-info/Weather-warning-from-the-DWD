@@ -20,9 +20,7 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
 
     protected bool $viewMapInfo = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getAdditionalData(): array
     {
         return [
@@ -31,25 +29,19 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionDefinition(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionObjectTypes(): array
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionsTemplate(): string
     {
         $mapOptions = [
@@ -75,9 +67,7 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent(): void
     {
         if (!MODULE_WEATHER_WARNING) {
@@ -105,9 +95,7 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readConditions(): void
     {
         if (($_POST['map'] ?? '') !== '') {
@@ -119,9 +107,7 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setBox(Box $box, bool $setConditionData = true): void
     {
         parent::setBox($box);
@@ -137,9 +123,7 @@ class WeatherWarningGermanyBoxController extends AbstractBoxController implement
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateConditions(): void
     {
     }
