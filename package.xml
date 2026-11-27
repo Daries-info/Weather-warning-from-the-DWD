@@ -5,8 +5,8 @@
     <packageinformation>
         <packagename>Weather warnings from the DWD</packagename>
         <packagename language="de">Wetterwarnungen vom DWD</packagename>
-        <packagedescription>Displays the current severe weather warnings for Germany and your region.</packagedescription>
-        <packagedescription language="de">Zeigt die aktuellen Unwetterwarnungen für Deutschland und deiner Region an.</packagedescription>
+        <packagedescription>Shows the current weather warnings of the DWD for Germany and your own region, including warning maps, the grassland fire index and the forest fire hazard index.</packagedescription>
+        <packagedescription language="de">Zeigt die aktuellen Wetterwarnungen des DWD für Deutschland und die eigene Region an, inklusive Warnkarten, Graslandfeuerindex und Waldbrand-Gefahrenindex.</packagedescription>
         <version>2.1.0</version>
         <date>2026-11-27</date>
     </packageinformation>
