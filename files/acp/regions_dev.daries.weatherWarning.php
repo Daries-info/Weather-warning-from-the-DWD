@@ -6,8 +6,8 @@
  * Source: DWD GeoServer layers `dwd:Warngebiete_Kreise` and `dwd:Warngebiete_Kueste`, as of November 2026.
  * The region names match the `regionName` of the warnings in `warnapp/json/warnings.json`.
  *
- * @author  Marco Daries, Alexander Langer (Source of ideas)
- * @copyright   2020-2024 Daries.dev
+ * @author  Marco D., Alexander Langer (Source of ideas)
+ * @copyright   2020-2026 Daries.info
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  * @since 2.1
  */

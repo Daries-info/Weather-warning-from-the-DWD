@@ -8,8 +8,8 @@
  * identify its district. Names that occur in several districts, and municipalities of districts the DWD splits
  * into several warn areas, are left out, as their warn area cannot be determined.
  *
- * @author  Marco Daries, Alexander Langer (Source of ideas)
- * @copyright   2020-2024 Daries.dev
+ * @author  Marco D., Alexander Langer (Source of ideas)
+ * @copyright   2020-2026 Daries.info
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  * @since 2.1
  */

@@ -10,8 +10,8 @@ use wcf\system\WCF;
  * receive a warning. Stored regions are moved to the warn area they belong to where this is unambiguous
  * and cleared otherwise, so the default region applies again.
  *
- * @author  Marco Daries, Alexander Langer (Source of ideas)
- * @copyright   2020-2024 Daries.dev
+ * @author  Marco D., Alexander Langer (Source of ideas)
+ * @copyright   2020-2026 Daries.info
  * @license Daries.info - Free License <https://daries.info/license/free.html>
  * @since 2.1
  */
